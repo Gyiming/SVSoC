@@ -45,7 +45,8 @@ def schecule(i,aenable,benable,cenable,denable,La,Lb,Lc,Ld,Ea,Eb,Ec,Ed,Ebudget,a
 	return value
 
 
-def main():
+def laschdule(Ebudget,Ea,Eb,Ec,Ed,La,Lb,Lc,Ld):
+	'''
 	Ebudget = 400
 	Ea = 10
 	Eb = 69
@@ -55,6 +56,7 @@ def main():
 	Lb = 186
 	Lc = 231
 	Ld = 565
+	'''
 	a=[0 for i in range(11)]
 	b=[0 for i in range(11)]
 	c=[0 for i in range(11)]
@@ -125,8 +127,10 @@ def main():
 				d[j] = d[i] + Lde
 			Ebudget = Ebudget - Ed
 
-	for i in range(1,11):
-		print(ft[i])
+	#for i in range(1,11):
+	#	print(ft[i])
+
+	return pk,ft
 
 if __name__ == '__main__':
 	main()

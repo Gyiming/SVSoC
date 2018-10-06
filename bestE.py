@@ -16,7 +16,7 @@ def schedule(La,Lb,Lc,Ld,ast,bst,cst,dst):
 
 	return value
 
-def main():
+def enschedule(Lbudget,Ea,Eb,Ec,Ed,La,Lb,Lc,Ld):
 	Lbudget = 900
 	Ea = 10
 	Eb = 69
@@ -140,8 +140,7 @@ def main():
 				d[j] = d[i]
 			anum = anum - 1			
 
-	for i in range(1,11):
-		print(ft[i])
+	return pk,ft
 
 if __name__ == '__main__':
 	main()

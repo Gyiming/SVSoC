@@ -352,6 +352,11 @@ def main():
                     accumulation_accelerator = accumulation_accelerator + accelerator_time[i] - start_time[i]
                 #spec_soc_latencymin, E<=Eb
                 #energy_Eb_minL, latency_Eb_minL = runtime2(frames_predicted,latency_CPU1,latency_GPU,latency_DSP,latency_accelerator,energy_CPU1,energy_GPU,energy_DSP,energy_accelerator,E_budget)
+                if (predict_time[i] > predict_time_p[i]):
+                    predict_time_p[i] = predict_time[i]
+
+                if (predict_time[i] > predict_time_e[i]):
+                    predict_time_e[i] = predict_time[i]
                 pk,tk= schedule.laschdule(400,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1)
                 t = i - predict_frame_location
                 if (pk[t] == 'acc'):

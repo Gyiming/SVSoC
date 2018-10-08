@@ -46,6 +46,10 @@ def main():
     hold_sensing_time = [0 for i in range(10000)]
     hold_ISP_time = [0 for i in range(10000)]
     hold_end_time = [0 for i in range(10000)]
+    FCFS_acc = [0 for i in range(10000)]
+    FCFS_gpu = [0 for i in range(10000)]
+    FCFS_dsp = [0 for i in range(10000)]
+    FCFS_cpu = [0 for i in range(10000)]
     accumulation_FCFS = 0
     accumulation_hold = 0
     total_energy_FCFS = 0
@@ -109,6 +113,8 @@ def main():
         energy_check = int(config.get("info","energy_check"))
         energy_commit = int(config.get("info","energy_commit"))
         accuracy = float(config.get("info","accuracy"))
+        energy_budget = float(config.get("info","energy_budget"))
+        latency_budget = float(config.get("info","latency_budget"))
     pk = [0 for i in range(1,11)]
     tk = [0 for i in range(1,11)]
     pke = [0 for i in range(1,11)]
@@ -357,7 +363,7 @@ def main():
 
                 if (predict_time[i] > predict_time_e[i]):
                     predict_time_e[i] = predict_time[i]
-                pk,tk= schedule.laschdule(400,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1)
+                pk,tk= schedule.laschdule(energy_budget,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1)
                 t = i - predict_frame_location
                 if (pk[t] == 'acc'):
                     end_time_perf[i] = predict_time_p[i] + tk[t] + latency_commit + 70
@@ -374,19 +380,19 @@ def main():
                 accumulation_spec_perf = accumulation_spec_perf + end_time_perf[i] - start_time[i]                
                 #spec_soc_energymin, L<=Lb
                 #energy_Lb_minE, latency_Lb_minE  = runtime1(frames_predicted,latency_CPU1,latency_GPU,latency_DSP,latency_accelerator,energy_CPU1,energy_GPU,energy_DSP,energy_accelerator,L_budget)
-                pke, ekt = bestE.enschedule(900,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1)
+                pke, ekt = bestE.enschedule(latency_budget,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1)
                 if (pke[t] == 'acc'):
                     end_time_energy[i] = predict_time_e[i] + ekt[t] + latency_commit + 70
-                    total_energy_spec_energy = total_energy_spec_perf + energy_accelerator + energy_commit
+                    total_energy_spec_energy = total_energy_spec_energy + energy_accelerator + energy_commit
                 if (pke[t] == 'gpu'):
                     end_time_energy[i] = predict_time_e[i] + ekt[t] + latency_commit
-                    total_energy_spec_energy = total_energy_spec_perf + energy_GPU + energy_commit
+                    total_energy_spec_energy = total_energy_spec_energy + energy_GPU + energy_commit
                 if (pke[t] == 'dsp'):
                     end_time_energy[i] = predict_time_e[i] + ekt[t] + latency_commit
-                    total_energy_spec_energy = total_energy_spec_perf + energy_DSP + energy_commit
+                    total_energy_spec_energy = total_energy_spec_energy + energy_DSP + energy_commit
                 if (pke[t] == 'cpu'):
                     end_time_energy[i] = predict_time_e[i] + ekt[t] + latency_commit
-                    total_energy_spec_energy = total_energy_spec_perf + energy_CPU1 + energy_commit
+                    total_energy_spec_energy = total_energy_spec_energy + energy_CPU1 + energy_commit
                 accumulation_spec_energy = accumulation_spec_energy + end_time_energy[i] - start_time[i]
 
                 if (t==10):
@@ -811,25 +817,64 @@ def main():
         if (i==1):
             start_time[i]=0;
             FCFS_sensing_time[i] = start_time[i] + latency_sensing
+            total_energy_FCFS = total_energy_FCFS + energy_sensing
             FCFS_ISP_time[i] = FCFS_sensing_time[i] + latency_ISP
+            total_energy_FCFS = total_energy_FCFS + energy_ISP
             FCFS_end_time[i] = FCFS_ISP_time[i] + latency_accelerator + latency_commit
+            total_energy_FCFS = total_energy_FCFS + energy_accelerator + energy_commit
+            FCFS_acc[i] = FCFS_end_time[i] - latency_commit
             accumulation_FCFS = accumulation_FCFS+FCFS_end_time[i] - start_time[i]
         else:
             start_time[i]=FCFS_sensing_time[i-1];
             FCFS_sensing_time[i] = start_time[i] + latency_sensing
+            total_energy_FCFS = total_energy_FCFS + energy_sensing
             if (FCFS_sensing_time[i]>FCFS_ISP_time[i-1]):
                 FCFS_ISP_time[i] = FCFS_sensing_time[i] + latency_ISP
+                total_energy_FCFS = total_energy_FCFS + energy_ISP
             else:
                 FCFS_ISP_time[i] = FCFS_ISP_time[i-1] + latency_ISP
-            if (flag==flagacc):
-                flag = flaggpu
+                total_energy_FCFS = total_energy_FCFS + energy_ISP
+            if (FCFS_ISP_time[i] > FCFS_acc[i-1] ):
                 FCFS_end_time[i] = FCFS_ISP_time[i] + latency_accelerator + latency_commit
-            elif (flag==flaggpu):
-                flag = flagdsp
+                total_energy_FCFS = total_energy_FCFS + energy_accelerator + energy_commit
+                FCFS_acc[i] = FCFS_end_time[i] - latency_commit
+                FCFS_gpu[i] = FCFS_gpu[i-1]
+                FCFS_dsp[i] = FCFS_dsp[i-1]
+                FCFS_cpu[i] = FCFS_cpu[i-1]
+                #print('acc')
+            elif (FCFS_ISP_time[i] > FCFS_gpu[i-1]):
                 FCFS_end_time[i] = FCFS_ISP_time[i] + latency_GPU + latency_commit
-            else:
-                flag = flagacc
+                total_energy_FCFS = total_energy_FCFS + energy_GPU + energy_commit
+                FCFS_gpu[i] = FCFS_end_time[i] - latency_commit
+                FCFS_acc[i] = FCFS_acc[i-1]
+                FCFS_dsp[i] = FCFS_dsp[i-1]
+                FCFS_cpu[i] = FCFS_cpu[i-1]
+                #print('gpu')
+            elif (FCFS_ISP_time[i] > FCFS_dsp[i-1]):
                 FCFS_end_time[i] = FCFS_ISP_time[i] + latency_DSP + latency_commit
+                total_energy_FCFS = total_energy_FCFS + energy_DSP + energy_commit
+                FCFS_dsp[i] = FCFS_end_time[i] - latency_commit
+                FCFS_acc[i] = FCFS_acc[i-1]
+                FCFS_gpu[i] = FCFS_gpu[i-1]
+                FCFS_cpu[i] = FCFS_cpu[i-1]
+                #print('dsp')
+            elif (FCFS_ISP_time[i] > FCFS_cpu[i-1]):
+                FCFS_end_time[i] = FCFS_ISP_time[i] + latency_CPU1 + latency_commit
+                total_energy_FCFS = total_energy_FCFS + energy_CPU1 + energy_commit
+                FCFS_cpu[i] = FCFS_end_time[i] - latency_commit
+                FCFS_acc[i] = FCFS_acc[i-1]
+                FCFS_dsp[i] = FCFS_dsp[i-1]
+                FCFS_gpu[i] = FCFS_gpu[i-1]
+                #print('cpu')
+            else:
+                FCFS_end_time[i] = FCFS_acc[i-1] + latency_accelerator + latency_commit
+                total_energy_FCFS = total_energy_FCFS + energy_accelerator + energy_commit
+                FCFS_acc[i] = FCFS_end_time[i] - latency_commit
+                FCFS_gpu[i] = FCFS_gpu[i-1]
+                FCFS_dsp[i] = FCFS_dsp[i-1]
+                FCFS_cpu[i] = FCFS_cpu[i-1]
+                #print('acc')               
+
             accumulation_FCFS = accumulation_FCFS+FCFS_end_time[i] - start_time[i]
 
     for i in range(1,frame+1):
@@ -952,6 +997,7 @@ def main():
     print('perfbest_energy', total_energy_spec_perf / frame)
     print('energybest_energy', total_energy_spec_energy / frame)
     print('FCFS',accumulation_FCFS/frame)
+    print('FCFS_energy', total_energy_FCFS/frame)
     print('hold',accumulation_hold/frame)
     print('hold_energy',total_energy_hold/frame)
     

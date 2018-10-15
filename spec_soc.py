@@ -64,6 +64,7 @@ def main():
     count = 1
     base = 1
     predict_flag = 0
+    ssim = np.load('ssim.npy')
     with open("soc_configure.cfg","r+") as cfgfile:
         config.readfp(cfgfile)
         frame = int(config.get("info","frame"))
@@ -458,9 +459,11 @@ def main():
                 total_energy_spec_perf = total_energy_spec_perf + energy_predict
                 total_energy_spec_energy = total_energy_spec_energy + energy_predict
                 for j in range(2,frames_predicted+1):
-                    predict_time[j] = ISP_time[i] + latency_predict
+                    predict_time_e[j] = ISP_time[i] + latency_predict
+                    predict_time_p[j] = ISP_time[i] + latency_predict
 
             elif ((i-predict_frame_location) == (frames_predicted+1)):
+            #elif (i%11==0):
                 predict_frame_location = i;
                 start_time[i] = sensing_time[i-1]
                 #sensing_time
@@ -561,10 +564,9 @@ def main():
                     predict_time[j] = ISP_time[i] + latency_predict
 
             else:
-                precision=random.random()
-                if (precision <=1-accuracy):
+                if (ssim[i-1] <accuracy):
                 #check wrong
-                    predict_frame_location = i;
+                    #predict_frame_location = i;
                     start_time[i] = sensing_time[i-1]
                     #sensing_time
                     sensing_time[i] = start_time[i] + latency_sensing
@@ -640,30 +642,55 @@ def main():
                         total_energy_accelerator = total_energy_accelerator + energy_accelerator + energy_commit
                         accumulation_accelerator = accumulation_accelerator + accelerator_time[i] - start_time[i]
                     #spec_soc_performance_first
-                    if (ISP_time[i] > end_time_perf[i-1]):
-                        end_time_perf[i] = ISP_time[i] + latency_accelerator + latency_commit
+                    '''
+                    if (predict_time[i] > predict_time_p[i]):
+                        predict_time_p[i] = predict_time[i]
+
+                    if (predict_time[i] > predict_time_e[i]):
+                        predict_time_e[i] = predict_time[i]
+                    pk,tk= schedule.laschdule(energy_budget,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1)
+                    t = i - predict_frame_location
+                    if (pk[t] == 'acc'):
+                        end_time_perf[i] = predict_time_p[i] + tk[t] + latency_commit + 70 + latency_CPU1
                         total_energy_spec_perf = total_energy_spec_perf + energy_accelerator + energy_commit
-                        accumulation_spec_perf = accumulation_spec_perf + end_time_perf[i] - start_time[i]
-                    else:
-                        end_time_perf[i] = end_time_perf[i-1] + latency_accelerator + latency_commit
-                        total_energy_spec_perf = total_energy_spec_perf + energy_accelerator + energy_commit
-                        accumulation_spec_perf = accumulation_spec_perf + end_time_perf[i] - start_time[i]
+                    if (pk[t] == 'gpu'):
+                        end_time_perf[i] = predict_time_p[i] + tk[t] + latency_commit + latency_CPU1
+                        total_energy_spec_perf = total_energy_spec_perf + energy_GPU + energy_commit
+                    if (pk[t] == 'dsp'):
+                        end_time_perf[i] = predict_time_p[i] + tk[t] + latency_commit + latency_CPU1
+                        total_energy_spec_perf = total_energy_spec_perf + energy_DSP + energy_commit
+                    if (pk[t] == 'cpu'):
+                        end_time_perf[i] = predict_time_p[i] + tk[t] + latency_commit + latency_CPU1
+                        total_energy_spec_perf = total_energy_spec_perf + energy_CPU1 + energy_commit
+                    accumulation_spec_perf = accumulation_spec_perf + end_time_perf[i] - start_time[i]   
+                    '''
+                    end_time_perf[i] = end_time_perf[i] + latency_CPU5 + latency_commit
+                    total_energy_spec_perf = total_energy_spec_perf + energy_CPU1 + energy_commit
+                    accumulation_spec_perf = accumulation_spec_perf + end_time_perf[i] - start_time[i]
+                    
                     #spec_soc_energy_first
-                    if (ISP_time[i] > end_time_energy[i-1]):
-                        end_time_energy[i] = ISP_time[i] + latency_accelerator + latency_commit
+                    '''
+                    pke, ekt = bestE.enschedule(latency_budget,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1)
+                    if (pke[t] == 'acc'):
+                        end_time_energy[i] = predict_time_e[i] + ekt[t] + latency_commit + 70 + latency_CPU1
                         total_energy_spec_energy = total_energy_spec_energy + energy_accelerator + energy_commit
-                        accumulation_spec_energy = accumulation_spec_energy + end_time_energy[i] - start_time[i]
-                    else:
-                        end_time_energy[i] = end_time_energy[i-1] + latency_accelerator + latency_commit
-                        total_energy_spec_energy = total_energy_spec_energy + energy_accelerator + energy_commit
-                        accumulation_spec_energy = accumulation_spec_energy + end_time_energy[i] - start_time[i]
+                    if (pke[t] == 'gpu'):
+                        end_time_energy[i] = predict_time_e[i] + ekt[t] + latency_commit + latency_CPU1
+                        total_energy_spec_energy = total_energy_spec_energy + energy_GPU + energy_commit
+                    if (pke[t] == 'dsp'):
+                        end_time_energy[i] = predict_time_e[i] + ekt[t] + latency_commit + latency_CPU1
+                        total_energy_spec_energy = total_energy_spec_energy + energy_DSP + energy_commit
+                    if (pke[t] == 'cpu'):
+                        end_time_energy[i] = predict_time_e[i] + ekt[t] + latency_commit + latency_CPU1
+                        total_energy_spec_energy = total_energy_spec_energy + energy_CPU1 + energy_commit
+                    accumulation_spec_energy = accumulation_spec_energy + end_time_energy[i] - start_time[i]
+                    '''
+                    end_time_energy[i] = ISP_time[i] +latency_CPU5 + latency_commit
+                    total_energy_spec_energy = total_energy_spec_energy + energy_CPU1 + energy_commit
+                    accumulation_spec_energy = accumulation_spec_energy + end_time_energy[i] - start_time[i]
+                    
                     #predict_time
-                    total_energy_spec_perf = total_energy_spec_perf + energy_predict
-                    total_energy_spec_energy = total_energy_spec_energy + energy_predict
-                    total_energy_spec_perf = total_energy_spec_perf + energy_sensing + energy_ISP
-                    total_energy_spec_energy = total_energy_spec_energy + energy_sensing + energy_ISP
-                    for j in range(i+1,i+frames_predicted+1):
-                        predict_time[j] = ISP_time[i] + latency_predict
+
 
 
                 else:
@@ -675,8 +702,8 @@ def main():
                     total_energy_GPU = total_energy_GPU + energy_sensing
                     total_energy_DSP = total_energy_DSP + energy_sensing
                     total_energy_accelerator = total_energy_accelerator + energy_sensing
-                    total_energy_spec_perf = total_energy_spec_perf + energy_sensing
-                    total_energy_spec_energy = total_energy_spec_energy + energy_sensing
+                    #total_energy_spec_perf = total_energy_spec_perf + energy_sensing
+                    #total_energy_spec_energy = total_energy_spec_energy + energy_sensing
                     #ISP time
                     if (sensing_time[i] > ISP_time[i-1]):
                         ISP_time[i] = sensing_time[i] + latency_ISP
@@ -685,8 +712,8 @@ def main():
                         total_energy_GPU = total_energy_GPU + energy_ISP
                         total_energy_DSP = total_energy_DSP + energy_ISP
                         total_energy_accelerator = total_energy_accelerator + energy_ISP
-                        total_energy_spec_perf = total_energy_spec_perf + energy_ISP
-                        total_energy_spec_energy = total_energy_spec_energy + energy_ISP
+                        #total_energy_spec_perf = total_energy_spec_perf + energy_ISP
+                        #total_energy_spec_energy = total_energy_spec_energy + energy_ISP
                     else:
                         ISP_time[i] = ISP_time[i-1] + latency_ISP
                         total_energy_CPU1 = total_energy_CPU1 + energy_ISP
@@ -694,8 +721,8 @@ def main():
                         total_energy_GPU = total_energy_GPU + energy_ISP
                         total_energy_DSP = total_energy_DSP + energy_ISP
                         total_energy_accelerator = total_energy_accelerator + energy_ISP
-                        total_energy_spec_perf = total_energy_spec_perf + energy_ISP
-                        total_energy_spec_energy = total_energy_spec_energy + energy_ISP
+                        #total_energy_spec_perf = total_energy_spec_perf + energy_ISP
+                        #total_energy_spec_energy = total_energy_spec_energy + energy_ISP
                     #fast_CPU baseline
                     if (ISP_time[i] > CPU1_time[i-1]):
                         CPU1_time[i] = ISP_time[i] + latency_CPU1 + latency_commit
@@ -743,73 +770,47 @@ def main():
                         accumulation_accelerator = accumulation_accelerator + accelerator_time[i] - start_time[i]
                     #spec_soc_latencymin, E<=Eb
                     #energy_Eb_minL, latency_Eb_minL = runtime2(frames_predicted,latency_CPU1,latency_GPU,latency_DSP,latency_accelerator,energy_CPU1,energy_GPU,energy_DSP,energy_accelerator,E_budget)
-                    if ((i-predict_frame_location)==1):
-                        end_time_perf[i] = predict_time[i] + latency_accelerator + latency_commit
+                    if (predict_time[i] > predict_time_p[i]):
+                        predict_time_p[i] = predict_time[i]
+
+                    if (predict_time[i] > predict_time_e[i]):
+                        predict_time_e[i] = predict_time[i]
+                    pk,tk= schedule.laschdule(energy_budget,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1)
+                    t = i - predict_frame_location
+                    if (pk[t] == 'acc'):
+                        end_time_perf[i] = predict_time_p[i] + tk[t] + latency_commit + 70
                         total_energy_spec_perf = total_energy_spec_perf + energy_accelerator + energy_commit
-                    elif ((i-predict_frame_location)==2):
-                        end_time_perf[i] = predict_time[i] + latency_GPU + latency_commit
+                    if (pk[t] == 'gpu'):
+                        end_time_perf[i] = predict_time_p[i] + tk[t] + latency_commit
                         total_energy_spec_perf = total_energy_spec_perf + energy_GPU + energy_commit
-                    elif ((i-predict_frame_location)==3):
-                        end_time_perf[i] = predict_time[i] + latency_accelerator*2 + latency_commit
-                        total_energy_spec_perf = total_energy_spec_perf + energy_accelerator + energy_commit
-                    elif ((i-predict_frame_location)==4):
-                        end_time_perf[i] = predict_time[i] + latency_DSP + latency_commit
+                    if (pk[t] == 'dsp'):
+                        end_time_perf[i] = predict_time_p[i] + tk[t] + latency_commit
                         total_energy_spec_perf = total_energy_spec_perf + energy_DSP + energy_commit
-                    elif ((i-predict_frame_location)==5):
-                        end_time_perf[i] = predict_time[i] + latency_accelerator*3 + latency_commit
-                        total_energy_spec_perf = total_energy_spec_perf + energy_accelerator + energy_commit
-                    elif ((i-predict_frame_location)==6):
-                        end_time_perf[i] = predict_time[i] + latency_GPU*2 + latency_commit
-                        total_energy_spec_perf = total_energy_spec_perf + energy_GPU + energy_commit
-                    elif ((i-predict_frame_location)==7):
-                        end_time_perf[i] = predict_time[i] + latency_accelerator*4 + latency_commit
-                        total_energy_spec_perf = total_energy_spec_perf + energy_accelerator + energy_commit
-                    elif ((i-predict_frame_location)==8):
-                        end_time_perf[i] = predict_time[i] + latency_DSP*2 + latency_commit
-                        total_energy_spec_perf = total_energy_spec_perf + energy_DSP + energy_commit
-                    elif ((i-predict_frame_location)==9):
-                        end_time_perf[i] = predict_time[i] + latency_accelerator*5 + latency_commit
-                        total_energy_spec_perf = total_energy_spec_perf + energy_accelerator + energy_commit
-                    elif ((i-predict_frame_location)==10):
-                        end_time_perf[i] = predict_time[i] + latency_GPU*3 + latency_commit
-                        total_energy_spec_perf = total_energy_spec_perf + energy_GPU + energy_commit
+                    if (pk[t] == 'cpu'):
+                        end_time_perf[i] = predict_time_p[i] + tk[t] + latency_commit
+                        total_energy_spec_perf = total_energy_spec_perf + energy_CPU1 + energy_commit
                     accumulation_spec_perf = accumulation_spec_perf + end_time_perf[i] - start_time[i]                
-                    
                     #spec_soc_energymin, L<=Lb
                     #energy_Lb_minE, latency_Lb_minE  = runtime1(frames_predicted,latency_CPU1,latency_GPU,latency_DSP,latency_accelerator,energy_CPU1,energy_GPU,energy_DSP,energy_accelerator,L_budget)
-                    if ((i-predict_frame_location)==1):
-                        end_time_energy[i] = predict_time[i] + latency_accelerator + latency_commit
+                    pke, ekt = bestE.enschedule(latency_budget,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1)
+                    if (pke[t] == 'acc'):
+                        end_time_energy[i] = predict_time_e[i] + ekt[t] + latency_commit + 70
                         total_energy_spec_energy = total_energy_spec_energy + energy_accelerator + energy_commit
-                    elif ((i-predict_frame_location)==2):
-                        end_time_energy[i] = predict_time[i] + latency_accelerator*2 + latency_commit
-                        total_energy_spec_energy = total_energy_spec_energy + energy_accelerator + energy_commit
-                    elif ((i-predict_frame_location)==3):
-                        end_time_energy[i] = predict_time[i] + latency_accelerator*3 + latency_commit
-                        total_energy_spec_energy = total_energy_spec_energy + energy_accelerator + energy_commit
-                    elif ((i-predict_frame_location)==4):
-                        end_time_energy[i] = predict_time[i] + latency_accelerator*4 + latency_commit
-                        total_energy_spec_energy = total_energy_spec_energy + energy_accelerator + energy_commit
-                    elif ((i-predict_frame_location)==5):
-                        end_time_energy[i] = predict_time[i] + latency_accelerator*5 + latency_commit
-                        total_energy_spec_energy = total_energy_spec_energy + energy_accelerator + energy_commit
-                    elif ((i-predict_frame_location)==6):
-                        end_time_energy[i] = predict_time[i] + latency_accelerator*6 + latency_commit
-                        total_energy_spec_energy = total_energy_spec_energy + energy_accelerator + energy_commit
-                    elif ((i-predict_frame_location)==7):
-                        end_time_energy[i] = predict_time[i] + latency_accelerator*7 + latency_commit
-                        total_energy_spec_energy = total_energy_spec_energy + energy_accelerator + energy_commit
-                    elif ((i-predict_frame_location)==8):
-                        end_time_energy[i] = predict_time[i] + latency_accelerator*8 + latency_commit
-                        total_energy_spec_energy = total_energy_spec_energy + energy_accelerator + energy_commit
-                    elif ((i-predict_frame_location)==9):
-                        end_time_energy[i] = predict_time[i] + latency_accelerator*9 + latency_commit
-                        total_energy_spec_energy = total_energy_spec_energy + energy_accelerator + energy_commit
-                    elif ((i-predict_frame_location)==10):
-                        end_time_energy[i] = predict_time[i] + latency_accelerator*10 + latency_commit
-                        total_energy_spec_energy = total_energy_spec_energy + energy_accelerator + energy_commit
+                    if (pke[t] == 'gpu'):
+                        end_time_energy[i] = predict_time_e[i] + ekt[t] + latency_commit
+                        total_energy_spec_energy = total_energy_spec_energy + energy_GPU + energy_commit
+                    if (pke[t] == 'dsp'):
+                        end_time_energy[i] = predict_time_e[i] + ekt[t] + latency_commit
+                        total_energy_spec_energy = total_energy_spec_energy + energy_DSP + energy_commit
+                    if (pke[t] == 'cpu'):
+                        end_time_energy[i] = predict_time_e[i] + ekt[t] + latency_commit
+                        total_energy_spec_energy = total_energy_spec_energy + energy_CPU1 + energy_commit
                     accumulation_spec_energy = accumulation_spec_energy + end_time_energy[i] - start_time[i]
-                    #check right
 
+                    if (t==10):
+                        for j in range(i+2,i+frames_predicted+2):
+                            predict_time_p[j] = end_time_perf[i]
+                            predict_time_e[j] = end_time_energy[i]                    
 
 
 

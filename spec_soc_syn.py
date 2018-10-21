@@ -132,7 +132,8 @@ def main():
     pke = [0 for i in range(1,11)]
     ekt = [0 for i in range(1,11)]
     for i in range(1, frame+1):
-        #assuming no check
+        #assume no check
+        fuck = 0;
         if (frames_checked == 0):
             if (i==1):
                 predict_frame_location=1;
@@ -418,7 +419,7 @@ def main():
                         end_time_perf[i] = GPU_signal + latency_GPU + latency_commit
                         GPU_signal = end_time_perf[i] - latency_commit
                         ACC_signal = ACC_signal
-                        GPU_signal = GPU_signal
+                        DSP_signal = DSP_signal
                         CPU_signal = CPU_signal
                         total_energy_spec_perf = total_energy_spec_perf + energy_GPU + energy_commit
                     if (pk[t] == 'dsp'):
@@ -511,7 +512,7 @@ def main():
 
         else:
             if (i==1):
-                predict_frame_location=1;
+                predict_frame_location=1
                 start_time[i] = 0
                 #sensing_time
                 sensing_time[i] = start_time[i] + latency_sensing
@@ -875,7 +876,7 @@ def main():
                     if (t==1):
                         if (pke[t] == 'acc'):
                             end_time_energy[i] = predict_time_e[i] + latency_accelerator + latency_commit + 70
-                            ACC_signale = predict_time_e[i] + latency_accelerator
+                            ACC_signale = end_time_energy[i] - latency_commit
                             GPU_signale = predict_time_e[i]
                             DSP_signale = predict_time_e[i]
                             CPU_signale = predict_time_e[i]
@@ -1026,28 +1027,28 @@ def main():
                     if (t==1):
                         if (pk[t] == 'acc'):
                             end_time_perf[i] = predict_time_p[i] + latency_accelerator + latency_commit + 70
-                            ACC_signal = predict_time_p[i] + latency_accelerator
+                            ACC_signal = end_time_perf[i] - latency_commit
                             DSP_signal = predict_time_p[i]
                             GPU_signal = predict_time_p[i]
                             CPU_signal = predict_time_p[i]
                             total_energy_spec_perf = total_energy_spec_perf + energy_accelerator + energy_commit
                         if (pk[t] == 'gpu'):
                             end_time_perf[i] = predict_time_p[i] + latency_GPU + latency_commit
-                            GPU_signal = predict_time_p[i] + latency_GPU
+                            GPU_signal = end_time_perf[i] - latency_commit
                             ACC_signal = predict_time_p[i]
                             DSP_signal = predict_time_p[i]
                             CPU_signal = predict_time_p[i]
                             total_energy_spec_perf = total_energy_spec_perf + energy_GPU + energy_commit
                         if (pk[t] == 'dsp'):
                             end_time_perf[i] = predict_time_p[i] + latency_DSP + latency_commit
-                            DSP_signal = predict_time_p[i] + latency_DSP
+                            DSP_signal = end_time_perf[i] - latency_commit
                             ACC_signal = predict_time_p[i]
                             GPU_signal = predict_time_p[i]
                             CPU_signal = predict_time_p[i]
                             total_energy_spec_perf = total_energy_spec_perf + energy_DSP + energy_commit
                         if (pk[t] == 'cpu'):
                             end_time_perf[i] = predict_time_p[i] + latency_CPU1 + latency_commit
-                            CPU_signal = predict_time_p[i] + latency_CPU1
+                            CPU_signal = end_time_perf[i] - latency_commit
                             DSP_signal = predict_time_p[i]
                             GPU_signal = predict_time_p[i]
                             ACC_signal = predict_time_p[i]

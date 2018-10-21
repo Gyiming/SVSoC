@@ -303,6 +303,17 @@ def figure6a():
 	ax1.set_ylim(0.0, 1.0)
 	plt.savefig("eva_obser6.pdf")
 
+def figure7a():
+	accuracy = [0.2637,]
+	0-0.2673
+	0.1-0.2673
+	0.2-0.2673
+	0.3-0.2673
+	0.4-0.3575
+	0.5-0.4118
+	0.6-0.4709
+	0.7-0.6762
+	0.8-0.9905
 
 def main():
 	#figure1()

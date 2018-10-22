@@ -758,7 +758,7 @@ def main():
                     if (t==1):
                         if (pk[t] == 'acc'):
                             if (ISP_time[i] + latency_check > predict_time_p[i]):
-                                end_time_perf[i] = ISP_time[i] + latency_accelerator + latency_commit + 70
+                                end_time_perf[i] = ISP_time[i] + latency_accelerator +latency_check + latency_commit + 70
                                 ACC_signal = ISP_time[i] + latency_accelerator + 70
                                 DSP_signal = predict_time_p[i]
                                 GPU_signal = predict_time_p[i]
@@ -772,7 +772,7 @@ def main():
                             total_energy_spec_perf = total_energy_spec_perf + energy_accelerator + energy_commit
                         if (pk[t] == 'gpu'):
                             if (ISP_time[i] + latency_check > predict_time_p[i]):
-                                end_time_perf[i] = ISP_time[i] + latency_GPU + latency_commit
+                                end_time_perf[i] = ISP_time[i] + latency_GPU + latency_check + latency_commit
                                 GPU_signal = ISP_time[i] + latency_GPU
                                 DSP_signal = predict_time_p[i]
                                 ACC_signal = predict_time_p[i]
@@ -786,7 +786,7 @@ def main():
                             total_energy_spec_perf = total_energy_spec_perf + energy_GPU + energy_commit
                         if (pk[t] == 'dsp'):
                             if (ISP_time[i] + latency_check> predict_time_p[i]):
-                                end_time_perf[i] = ISP_time[i] + latency_DSP + latency_commit
+                                end_time_perf[i] = ISP_time[i] + latency_DSP + latency_check + latency_commit
                                 DSP_signal = ISP_time[i] + latency_DSP 
                                 GPU_signal = predict_time_p[i]
                                 ACC_signal = predict_time_p[i]
@@ -800,7 +800,7 @@ def main():
                             total_energy_spec_perf = total_energy_spec_perf + energy_DSP + energy_commit
                         if (pk[t] == 'cpu'):
                             if (ISP_time[i] + latency_check > predict_time_p[i]):
-                                end_time_perf[i] = ISP_time[i] + latency_CPU1 + latency_commit
+                                end_time_perf[i] = ISP_time[i] + latency_CPU1 + latency_check + latency_commit
                                 CPU_signal = ISP_time[i] + latency_CPU1
                                 DSP_signal = predict_time_p[i]
                                 GPU_signal = predict_time_p[i]
@@ -815,7 +815,7 @@ def main():
                     else:
                         if (pk[t] == 'acc'):
                             if (ISP_time[i] + latency_check > ACC_signal):
-                                end_time_perf[i] = ISP_time[i] + latency_accelerator + latency_commit
+                                end_time_perf[i] = ISP_time[i] + latency_accelerator + latency_check + latency_commit
                                 ACC_signal = end_time_perf[i] - latency_commit
                                 DSP_signal = DSP_signal
                                 GPU_signal = GPU_signal
@@ -829,7 +829,7 @@ def main():
                             total_energy_spec_perf = total_energy_spec_perf + energy_accelerator + energy_commit
                         if (pk[t] == 'gpu'):
                             if (ISP_time[i] +latency_check > GPU_signal):
-                                end_time_perf[i] = ISP_time[i] + latency_GPU + latency_commit
+                                end_time_perf[i] = ISP_time[i] + latency_GPU + latency_check + latency_commit
                                 GPU_signal = end_time_perf[i] - latency_commit
                                 ACC_signal = ACC_signal
                                 CPU_signal = CPU_signal
@@ -843,7 +843,7 @@ def main():
                             total_energy_spec_perf = total_energy_spec_perf + energy_GPU + energy_commit
                         if (pk[t] == 'dsp'):
                             if (ISP_time[i] + latency_check > DSP_signal):
-                                end_time_perf[i] = ISP_time[i] + latency_DSP + latency_commit
+                                end_time_perf[i] = ISP_time[i] + latency_DSP + latency_check +latency_commit
                                 DSP_signal = end_time_perf[i] - latency_commit
                                 ACC_signal = ACC_signal
                                 GPU_signal = GPU_signal
@@ -857,7 +857,7 @@ def main():
                             total_energy_spec_perf = total_energy_spec_perf + energy_DSP + energy_commit
                         if (pk[t] == 'cpu'):
                             if (ISP_time[i] + latency_check > CPU_signal):
-                                end_time_perf[i] = ISP_time[i] + latency_CPU1 + latency_commit
+                                end_time_perf[i] = ISP_time[i] + latency_CPU1 + latency_check +latency_commit
                                 CPU_signal = end_time_perf[i] - latency_CPU1
                                 DSP_signal = DSP_signal
                                 GPU_signal = GPU_signal

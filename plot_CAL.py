@@ -304,16 +304,40 @@ def figure6a():
 	plt.savefig("eva_obser6.pdf")
 
 def figure7a():
-	accuracy = [0.2637,]
-	0-0.2673
-	0.1-0.2673
-	0.2-0.2673
-	0.3-0.2673
+	accuracy = []
+	0-0.2637
+	0.1-0.2637
+	0.2-0.2637
+	0.3-0.2637
 	0.4-0.3575
 	0.5-0.4118
 	0.6-0.4709
 	0.7-0.6762
 	0.8-0.9905
+
+def figure7b():
+	SVSoC - 7185.61
+	ACC - 27773.0
+	FCFS - 8025.6
+	HOLD - 7655.6
+	100 - 26360
+	200-22580
+	300-15067
+	400-7185.61
+	500-7185.61
+	600-7185.61
+
+	SVSoC_spec,th_1 7185.69
+	SVSoC_spec,th_0.9 7185.69
+	SVSoC_spec,th_0.8 7185.69
+	SVSoC_spec,th_0.7 7185.69
+	SVSoC_spec,th_0.6 7185.61
+	SVSoC_spec,th_0.5 7185.61
+	SVSoC_spec,th_0.4 7185.69
+	SVSoC_spec,th_0.3 7185.69
+	SVSoC_spec,th_0.2 7185.61
+	SVSoC_spec,th_0.1 7185.61
+
 
 def main():
 	#figure1()

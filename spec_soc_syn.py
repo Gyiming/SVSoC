@@ -669,492 +669,976 @@ def main():
                     predict_time[j] = ISP_time[i] + latency_predict
 
             else:
-                if (ssim_real[i] <accuracy):
-                #check wrong
-                    #predict_frame_location = i;
-                    start_time[i] = sensing_time[i-1]
-                    #sensing_time
-                    sensing_time[i] = start_time[i] + latency_sensing
-                    total_energy_CPU1 = total_energy_CPU1 + energy_sensing
-                    total_energy_CPU5 = total_energy_CPU5 + energy_sensing
-                    total_energy_GPU = total_energy_GPU + energy_sensing
-                    total_energy_DSP = total_energy_DSP + energy_sensing
-                    total_energy_accelerator = total_energy_accelerator + energy_sensing
-                    total_energy_spec_perf = total_energy_spec_perf + energy_sensing
-                    total_energy_spec_energy = total_energy_spec_energy + energy_sensing
-                    #ISP_time
-                    if (sensing_time[i] > ISP_time[i-1]):
-                        ISP_time[i] = sensing_time[i] + latency_ISP
-                        total_energy_CPU1 = total_energy_CPU1 + energy_ISP
-                        total_energy_CPU5 = total_energy_CPU5 + energy_ISP
-                        total_energy_GPU = total_energy_GPU + energy_ISP
-                        total_energy_DSP = total_energy_DSP + energy_ISP
-                        total_energy_accelerator = total_energy_accelerator + energy_ISP
-                        total_energy_spec_perf = total_energy_spec_perf + energy_ISP
-                        total_energy_spec_energy = total_energy_spec_energy + energy_ISP
-                    else:
-                        ISP_time[i] = ISP_time[i-1] + latency_ISP
-                        total_energy_CPU1 = total_energy_CPU1 + energy_ISP
-                        total_energy_CPU5 = total_energy_CPU5 + energy_ISP
-                        total_energy_GPU = total_energy_GPU + energy_ISP
-                        total_energy_DSP = total_energy_DSP + energy_ISP
-                        total_energy_accelerator = total_energy_accelerator + energy_ISP
-                        total_energy_spec_perf = total_energy_spec_perf + energy_ISP
-                        total_energy_spec_energy = total_energy_spec_energy + energy_ISP
-                    #fast_CPU baseline
-                    if (ISP_time[i] > CPU1_time[i-1]):
-                        CPU1_time[i] = ISP_time[i] + latency_CPU1 + latency_commit
-                        total_energy_CPU1 = total_energy_CPU1 + energy_CPU1 + energy_commit
-                        accumulation_CPU1 = accumulation_CPU1 + CPU1_time[i] - start_time[i]
-                    else:
-                        CPU1_time[i] = CPU1_time[i-1] + latency_CPU1 + latency_commit
-                        total_energy_CPU1 = total_energy_CPU1 + energy_CPU1 + energy_commit
-                        accumulation_CPU1 = accumulation_CPU1 + CPU1_time[i] - start_time[i]
-                    #slow_CPU baseline
-                    if (ISP_time[i] > CPU5_time[i-1]):
-                        CPU5_time[i] = ISP_time[i] + latency_CPU5 + latency_commit
-                        total_energy_CPU5 = total_energy_CPU5 + energy_CPU5 + energy_commit
-                        accumulation_CPU5 = accumulation_CPU5 + CPU5_time[i] - start_time[i]
-                    else:
-                        CPU5_time[i] = CPU5_time[i-1] + latency_CPU5 + latency_commit
-                        total_energy_CPU5 = total_energy_CPU5 + energy_CPU5 + energy_commit
-                        accumulation_CPU5 = accumulation_CPU5 + CPU5_time[i] - start_time[i]
-                    #GPU baseline
-                    if (ISP_time[i] > GPU_time[i-1]):
-                        GPU_time[i] = ISP_time[i] + latency_GPU + latency_commit
-                        total_energy_GPU = total_energy_GPU + energy_GPU + energy_commit
-                        accumulation_GPU = accumulation_GPU + GPU_time[i] - start_time[i]
-                    else:
-                        GPU_time[i] = GPU_time[i-1] + latency_GPU + latency_commit
-                        total_energy_GPU = total_energy_GPU + energy_GPU + energy_commit
-                        accumulation_GPU = accumulation_GPU + GPU_time[i] - start_time[i]
-                    #DSP baseline
-                    if (ISP_time[i] > DSP_time[i-1]):
-                        DSP_time[i] = ISP_time[i] + latency_DSP + latency_commit
-                        total_energy_DSP = total_energy_DSP + energy_DSP + energy_commit
-                        accumulation_DSP = accumulation_DSP + DSP_time[i] - start_time[i]
-                    else:
-                        DSP_time[i] = DSP_time[i-1] + latency_DSP + latency_commit
-                        total_energy_DSP = total_energy_DSP + energy_DSP + energy_commit
-                        accumulation_DSP = accumulation_DSP + DSP_time[i] - start_time[i]
-                    #accelerator baseline
-                    if (ISP_time[i] > accelerator_time[i-1]):
-                        accelerator_time[i] = ISP_time[i] + latency_accelerator + latency_commit
-                        total_energy_accelerator = total_energy_accelerator + energy_accelerator + energy_commit
-                        accumulation_accelerator = accumulation_accelerator + accelerator_time[i] - start_time[i]
-                    else:
-                        accelerator_time[i] = accelerator_time[i-1] + latency_accelerator + latency_commit
-                        total_energy_accelerator = total_energy_accelerator + energy_accelerator + energy_commit
-                        accumulation_accelerator = accumulation_accelerator + accelerator_time[i] - start_time[i]
-                    #spec_soc_latencymin, E<=Eb
-                    #energy_Eb_minL, latency_Eb_minL = runtime2(frames_predicted,latency_CPU1,latency_GPU,latency_DSP,latency_accelerator,energy_CPU1,energy_GPU,energy_DSP,energy_accelerator,E_budget)
-                    if (predict_time[i] > predict_time_p[i]):
-                        predict_time_p[i] = predict_time[i]
+                if (i<=132):
+                    if (ssim_real[i] <accuracy):
+                    #check wrong
+                        #predict_frame_location = i;
+                        start_time[i] = sensing_time[i-1]
+                        #sensing_time
+                        sensing_time[i] = start_time[i] + latency_sensing
+                        total_energy_CPU1 = total_energy_CPU1 + energy_sensing
+                        total_energy_CPU5 = total_energy_CPU5 + energy_sensing
+                        total_energy_GPU = total_energy_GPU + energy_sensing
+                        total_energy_DSP = total_energy_DSP + energy_sensing
+                        total_energy_accelerator = total_energy_accelerator + energy_sensing
+                        total_energy_spec_perf = total_energy_spec_perf + energy_sensing
+                        total_energy_spec_energy = total_energy_spec_energy + energy_sensing
+                        #ISP_time
+                        if (sensing_time[i] > ISP_time[i-1]):
+                            ISP_time[i] = sensing_time[i] + latency_ISP
+                            total_energy_CPU1 = total_energy_CPU1 + energy_ISP
+                            total_energy_CPU5 = total_energy_CPU5 + energy_ISP
+                            total_energy_GPU = total_energy_GPU + energy_ISP
+                            total_energy_DSP = total_energy_DSP + energy_ISP
+                            total_energy_accelerator = total_energy_accelerator + energy_ISP
+                            total_energy_spec_perf = total_energy_spec_perf + energy_ISP
+                            total_energy_spec_energy = total_energy_spec_energy + energy_ISP
+                        else:
+                            ISP_time[i] = ISP_time[i-1] + latency_ISP
+                            total_energy_CPU1 = total_energy_CPU1 + energy_ISP
+                            total_energy_CPU5 = total_energy_CPU5 + energy_ISP
+                            total_energy_GPU = total_energy_GPU + energy_ISP
+                            total_energy_DSP = total_energy_DSP + energy_ISP
+                            total_energy_accelerator = total_energy_accelerator + energy_ISP
+                            total_energy_spec_perf = total_energy_spec_perf + energy_ISP
+                            total_energy_spec_energy = total_energy_spec_energy + energy_ISP
+                        #fast_CPU baseline
+                        if (ISP_time[i] > CPU1_time[i-1]):
+                            CPU1_time[i] = ISP_time[i] + latency_CPU1 + latency_commit
+                            total_energy_CPU1 = total_energy_CPU1 + energy_CPU1 + energy_commit
+                            accumulation_CPU1 = accumulation_CPU1 + CPU1_time[i] - start_time[i]
+                        else:
+                            CPU1_time[i] = CPU1_time[i-1] + latency_CPU1 + latency_commit
+                            total_energy_CPU1 = total_energy_CPU1 + energy_CPU1 + energy_commit
+                            accumulation_CPU1 = accumulation_CPU1 + CPU1_time[i] - start_time[i]
+                        #slow_CPU baseline
+                        if (ISP_time[i] > CPU5_time[i-1]):
+                            CPU5_time[i] = ISP_time[i] + latency_CPU5 + latency_commit
+                            total_energy_CPU5 = total_energy_CPU5 + energy_CPU5 + energy_commit
+                            accumulation_CPU5 = accumulation_CPU5 + CPU5_time[i] - start_time[i]
+                        else:
+                            CPU5_time[i] = CPU5_time[i-1] + latency_CPU5 + latency_commit
+                            total_energy_CPU5 = total_energy_CPU5 + energy_CPU5 + energy_commit
+                            accumulation_CPU5 = accumulation_CPU5 + CPU5_time[i] - start_time[i]
+                        #GPU baseline
+                        if (ISP_time[i] > GPU_time[i-1]):
+                            GPU_time[i] = ISP_time[i] + latency_GPU + latency_commit
+                            total_energy_GPU = total_energy_GPU + energy_GPU + energy_commit
+                            accumulation_GPU = accumulation_GPU + GPU_time[i] - start_time[i]
+                        else:
+                            GPU_time[i] = GPU_time[i-1] + latency_GPU + latency_commit
+                            total_energy_GPU = total_energy_GPU + energy_GPU + energy_commit
+                            accumulation_GPU = accumulation_GPU + GPU_time[i] - start_time[i]
+                        #DSP baseline
+                        if (ISP_time[i] > DSP_time[i-1]):
+                            DSP_time[i] = ISP_time[i] + latency_DSP + latency_commit
+                            total_energy_DSP = total_energy_DSP + energy_DSP + energy_commit
+                            accumulation_DSP = accumulation_DSP + DSP_time[i] - start_time[i]
+                        else:
+                            DSP_time[i] = DSP_time[i-1] + latency_DSP + latency_commit
+                            total_energy_DSP = total_energy_DSP + energy_DSP + energy_commit
+                            accumulation_DSP = accumulation_DSP + DSP_time[i] - start_time[i]
+                        #accelerator baseline
+                        if (ISP_time[i] > accelerator_time[i-1]):
+                            accelerator_time[i] = ISP_time[i] + latency_accelerator + latency_commit
+                            total_energy_accelerator = total_energy_accelerator + energy_accelerator + energy_commit
+                            accumulation_accelerator = accumulation_accelerator + accelerator_time[i] - start_time[i]
+                        else:
+                            accelerator_time[i] = accelerator_time[i-1] + latency_accelerator + latency_commit
+                            total_energy_accelerator = total_energy_accelerator + energy_accelerator + energy_commit
+                            accumulation_accelerator = accumulation_accelerator + accelerator_time[i] - start_time[i]
+                        #spec_soc_latencymin, E<=Eb
+                        #energy_Eb_minL, latency_Eb_minL = runtime2(frames_predicted,latency_CPU1,latency_GPU,latency_DSP,latency_accelerator,energy_CPU1,energy_GPU,energy_DSP,energy_accelerator,E_budget)
+                        if (predict_time[i] > predict_time_p[i]):
+                            predict_time_p[i] = predict_time[i]
 
-                    if (predict_time[i] > predict_time_e[i]):
-                        predict_time_e[i] = predict_time[i]
-                    pk,tk= schedule.laschdule(energy_budget,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1)
-                    t = i - predict_frame_location
-                    if (t==1):
-                        if (pk[t] == 'acc'):
-                            if (ISP_time[i] + latency_check > predict_time_p[i]):
-                                end_time_perf[i] = ISP_time[i] + latency_accelerator +latency_check + latency_commit + 70
-                                ACC_signal = ISP_time[i] + latency_accelerator + 70
+                        if (predict_time[i] > predict_time_e[i]):
+                            predict_time_e[i] = predict_time[i]
+                        pk,tk= schedule.laschdule(energy_budget,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1)
+                        t = i - predict_frame_location
+                        if (t==1):
+                            if (pk[t] == 'acc'):
+                                if (ISP_time[i] + latency_check > predict_time_p[i]):
+                                    end_time_perf[i] = ISP_time[i] + latency_accelerator +latency_check + latency_commit + 70
+                                    ACC_signal = ISP_time[i] + latency_accelerator + 70
+                                    DSP_signal = predict_time_p[i]
+                                    GPU_signal = predict_time_p[i]
+                                    CPU_signal = predict_time_p[i]
+                                else:
+                                    end_time_perf[i] = predict_time_p[i] + latency_accelerator + latency_commit + 70
+                                    ACC_signal = predict_time_p[i] + latency_accelerator + 70
+                                    DSP_signal = predict_time_p[i]
+                                    GPU_signal = predict_time_p[i]
+                                    CPU_signal = predict_time_p[i]
+                                total_energy_spec_perf = total_energy_spec_perf + energy_accelerator + energy_commit
+                            if (pk[t] == 'gpu'):
+                                if (ISP_time[i] + latency_check > predict_time_p[i]):
+                                    end_time_perf[i] = ISP_time[i] + latency_GPU + latency_check + latency_commit
+                                    GPU_signal = ISP_time[i] + latency_GPU
+                                    DSP_signal = predict_time_p[i]
+                                    ACC_signal = predict_time_p[i]
+                                    CPU_signal = predict_time_p[i]
+                                else:
+                                    end_time_perf[i] = predict_time_p[i] + latency_GPU + latency_commit
+                                    GPU_signal = predict_time_p[i] + latency_GPU
+                                    ACC_signal = predict_time_p[i]
+                                    GPU_signal = predict_time_p[i]
+                                    CPU_signal = predict_time_p[i]
+                                total_energy_spec_perf = total_energy_spec_perf + energy_GPU + energy_commit
+                            if (pk[t] == 'dsp'):
+                                if (ISP_time[i] + latency_check> predict_time_p[i]):
+                                    end_time_perf[i] = ISP_time[i] + latency_DSP + latency_check + latency_commit
+                                    DSP_signal = ISP_time[i] + latency_DSP 
+                                    GPU_signal = predict_time_p[i]
+                                    ACC_signal = predict_time_p[i]
+                                    CPU_signal = predict_time_p[i]
+                                else:
+                                    end_time_perf[i] = predict_time_p[i] + latency_DSP + latency_commit
+                                    DSP_signal = predict_time_p[i] + latency_DSP
+                                    ACC_signal = predict_time_p[i]
+                                    GPU_signal = predict_time_p[i]
+                                    CPU_signal = predict_time_p[i]
+                                total_energy_spec_perf = total_energy_spec_perf + energy_DSP + energy_commit
+                            if (pk[t] == 'cpu'):
+                                if (ISP_time[i] + latency_check > predict_time_p[i]):
+                                    end_time_perf[i] = ISP_time[i] + latency_CPU1 + latency_check + latency_commit
+                                    CPU_signal = ISP_time[i] + latency_CPU1
+                                    DSP_signal = predict_time_p[i]
+                                    GPU_signal = predict_time_p[i]
+                                    ACC_signal = predict_time_p[i]                                
+                                else:
+                                    end_time_perf[i] = predict_time_p[i] + latency_CPU1 + latency_commit
+                                    CPU_signal = predict_time_p[i] + latency_CPU1
+                                    DSP_signal = predict_time_p[i]
+                                    GPU_signal = predict_time_p[i]
+                                    ACC_signal = predict_time_p[i]
+                                    total_energy_spec_perf = total_energy_spec_perf + energy_CPU1 + energy_commit
+                        else:
+                            if (pk[t] == 'acc'):
+                                if (ISP_time[i] + latency_check > ACC_signal):
+                                    end_time_perf[i] = ISP_time[i] + latency_accelerator + latency_check + latency_commit
+                                    ACC_signal = end_time_perf[i] - latency_commit
+                                    DSP_signal = DSP_signal
+                                    GPU_signal = GPU_signal
+                                    CPU_signal = CPU_signal
+                                else:
+                                    end_time_perf[i] = ACC_signal + latency_accelerator + latency_commit
+                                    ACC_signal = end_time_perf[i] - latency_commit
+                                    DSP_signal = DSP_signal
+                                    GPU_signal = GPU_signal
+                                    CPU_signal = CPU_signal
+                                total_energy_spec_perf = total_energy_spec_perf + energy_accelerator + energy_commit
+                            if (pk[t] == 'gpu'):
+                                if (ISP_time[i] +latency_check > GPU_signal):
+                                    end_time_perf[i] = ISP_time[i] + latency_GPU + latency_check + latency_commit
+                                    GPU_signal = end_time_perf[i] - latency_commit
+                                    ACC_signal = ACC_signal
+                                    CPU_signal = CPU_signal
+                                    DSP_signal = DSP_signal
+                                else:
+                                    end_time_perf[i] = GPU_signal + latency_GPU + latency_commit
+                                    GPU_signal = end_time_perf[i] - latency_commit
+                                    ACC_signal = ACC_signal
+                                    CPU_signal = CPU_signal
+                                    DSP_signal = DSP_signal
+                                total_energy_spec_perf = total_energy_spec_perf + energy_GPU + energy_commit
+                            if (pk[t] == 'dsp'):
+                                if (ISP_time[i] + latency_check > DSP_signal):
+                                    end_time_perf[i] = ISP_time[i] + latency_DSP + latency_check +latency_commit
+                                    DSP_signal = end_time_perf[i] - latency_commit
+                                    ACC_signal = ACC_signal
+                                    GPU_signal = GPU_signal
+                                    CPU_signal = CPU_signal                                
+                                else:
+                                    end_time_perf[i] = DSP_signal + latency_DSP + latency_commit
+                                    DSP_signal = end_time_perf[i] - latency_commit
+                                    ACC_signal = ACC_signal
+                                    GPU_signal = GPU_signal
+                                    CPU_signal = CPU_signal
+                                total_energy_spec_perf = total_energy_spec_perf + energy_DSP + energy_commit
+                            if (pk[t] == 'cpu'):
+                                if (ISP_time[i] + latency_check > CPU_signal):
+                                    end_time_perf[i] = ISP_time[i] + latency_CPU1 + latency_check +latency_commit
+                                    CPU_signal = end_time_perf[i] - latency_CPU1
+                                    DSP_signal = DSP_signal
+                                    GPU_signal = GPU_signal
+                                    ACC_signal = ACC_signal
+                                else:
+                                    end_time_perf[i] = CPU_signal + latency_CPU1 + latency_commit
+                                    CPU_signal = end_time_perf[i] - latency_CPU1
+                                    DSP_signal = DSP_signal
+                                    GPU_signal = GPU_signal
+                                    ACC_signal = ACC_signal
+                                total_energy_spec_perf = total_energy_spec_perf + energy_CPU1 + energy_commit    
+                        accumulation_spec_perf = accumulation_spec_perf + end_time_perf[i] - start_time[i]                
+                        #spec_soc_energymin, L<=Lb
+                        #energy_Lb_minE, latency_Lb_minE  = runtime1(frames_predicted,latency_CPU1,latency_GPU,latency_DSP,latency_accelerator,energy_CPU1,energy_GPU,energy_DSP,energy_accelerator,L_budget)
+                        pke, ekt = bestE.enschedule(latency_budget,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1)
+                        if (t==1):
+                            if (pke[t] == 'acc'):
+                                end_time_energy[i] = predict_time_e[i] + latency_accelerator + latency_commit + 70
+                                ACC_signale = end_time_energy[i] - latency_commit
+                                GPU_signale = predict_time_e[i]
+                                DSP_signale = predict_time_e[i]
+                                CPU_signale = predict_time_e[i]
+                                total_energy_spec_energy = total_energy_spec_energy + energy_accelerator + energy_commit
+                            if (pke[t] == 'gpu'):
+                                end_time_energy[i] = predict_time_e[i] + latency_GPU + latency_commit
+                                ACC_signale = predict_time_e[i]
+                                GPU_signale = predict_time_e[i] + latency_GPU
+                                DSP_signale = predict_time_e[i]
+                                CPU_signale = predict_time_e[i]
+                                total_energy_spec_energy = total_energy_spec_energy + energy_GPU + energy_commit
+                            if (pke[t] == 'dsp'):
+                                end_time_energy[i] = predict_time_e[i] + latency_DSP + latency_commit
+                                ACC_signale = predict_time_e[i]
+                                GPU_signale = predict_time_e[i]
+                                DSP_signale = predict_time_e[i] + latency_DSP
+                                CPU_signale = predict_time_e[i]
+                                total_energy_spec_energy = total_energy_spec_energy + energy_DSP + energy_commit
+                            if (pke[t] == 'cpu'):
+                                end_time_energy[i] = predict_time_e[i] + latency_CPU1 + latency_commit
+                                ACC_signale = predict_time_e[i]
+                                GPU_signale = predict_time_e[i]
+                                DSP_signale = predict_time_e[i]
+                                CPU_signale = predict_time_e[i] + latency_CPU1
+                                total_energy_spec_energy = total_energy_spec_energy + energy_CPU1 + energy_commit
+                        else:
+                            if (pke[t] == 'acc'):
+                                end_time_energy[i] = ACC_signale + latency_accelerator + latency_commit
+                                ACC_signale = end_time_energy[i] - latency_commit
+                                GPU_signale = predict_time_e[i]
+                                DSP_signale = predict_time_e[i]
+                                CPU_signale = predict_time_e[i]
+                                total_energy_spec_energy = total_energy_spec_energy + energy_accelerator + energy_commit
+                            if (pke[t] == 'gpu'):
+                                end_time_energy[i] = GPU_signale + latency_GPU + latency_commit
+                                ACC_signale = ACC_signale
+                                GPU_signale = end_time_perf[i] - latency_commit
+                                DSP_signale = DSP_signale
+                                CPU_signale = CPU_signale
+                                total_energy_spec_energy = total_energy_spec_energy + energy_GPU + energy_commit
+                            if (pke[t] == 'dsp'):
+                                end_time_energy[i] = DSP_signale + latency_DSP + latency_commit
+                                ACC_signale = ACC_signale
+                                GPU_signale = GPU_signale
+                                DSP_signale = end_time_perf[i] - latency_commit
+                                CPU_signale = predict_time_e[i]
+                                total_energy_spec_energy = total_energy_spec_energy + energy_DSP + energy_commit
+                            if (pke[t] == 'cpu'):
+                                end_time_energy[i] = CPU_signale + latency_CPU1 + latency_commit
+                                ACC_signale = ACC_signale
+                                GPU_signale = GPU_signale
+                                DSP_signale = DSP_signale
+                                CPU_signale = end_time_perf[i] - latency_commit
+                                total_energy_spec_energy = total_energy_spec_energy + energy_CPU1 + energy_commit
+
+                        accumulation_spec_energy = accumulation_spec_energy + end_time_energy[i] - start_time[i]
+
+                        if (t==10):
+                            for j in range(i+2,i+frames_predicted+2):
+                                predict_time_p[j] = end_time_perf[i]
+                                predict_time_e[j] = end_time_energy[i]                    
+                    else:
+                    #check correct
+                        start_time[i] = sensing_time[i-1]
+                        #sensing time
+                        sensing_time[i] = start_time[i] + latency_sensing
+                        total_energy_CPU1 = total_energy_CPU1 + energy_sensing
+                        total_energy_CPU5 = total_energy_CPU5 + energy_sensing
+                        total_energy_GPU = total_energy_GPU + energy_sensing
+                        total_energy_DSP = total_energy_DSP + energy_sensing
+                        total_energy_accelerator = total_energy_accelerator + energy_sensing
+                        #total_energy_spec_perf = total_energy_spec_perf + energy_sensing
+                        #total_energy_spec_energy = total_energy_spec_energy + energy_sensing
+                        #ISP time
+                        if (sensing_time[i] > ISP_time[i-1]):
+                            ISP_time[i] = sensing_time[i] + latency_ISP
+                            total_energy_CPU1 = total_energy_CPU1 + energy_ISP
+                            total_energy_CPU5 = total_energy_CPU5 + energy_ISP
+                            total_energy_GPU = total_energy_GPU + energy_ISP
+                            total_energy_DSP = total_energy_DSP + energy_ISP
+                            total_energy_accelerator = total_energy_accelerator + energy_ISP
+                            #total_energy_spec_perf = total_energy_spec_perf + energy_ISP
+                            #total_energy_spec_energy = total_energy_spec_energy + energy_ISP
+                        else:
+                            ISP_time[i] = ISP_time[i-1] + latency_ISP
+                            total_energy_CPU1 = total_energy_CPU1 + energy_ISP
+                            total_energy_CPU5 = total_energy_CPU5 + energy_ISP
+                            total_energy_GPU = total_energy_GPU + energy_ISP
+                            total_energy_DSP = total_energy_DSP + energy_ISP
+                            total_energy_accelerator = total_energy_accelerator + energy_ISP
+                            #total_energy_spec_perf = total_energy_spec_perf + energy_ISP
+                            #total_energy_spec_energy = total_energy_spec_energy + energy_ISP
+                        #fast_CPU baseline
+                        if (ISP_time[i] > CPU1_time[i-1]):
+                            CPU1_time[i] = ISP_time[i] + latency_CPU1 + latency_commit
+                            total_energy_CPU1 = total_energy_CPU1 + energy_CPU1 + energy_commit
+                            accumulation_CPU1 = accumulation_CPU1 + CPU1_time[i] - start_time[i]
+                        else:
+                            CPU1_time[i] = CPU1_time[i-1] + latency_CPU1 + latency_commit
+                            total_energy_CPU1 = total_energy_CPU1 + energy_CPU1 + energy_commit
+                            accumulation_CPU1 = accumulation_CPU1 + CPU1_time[i] - start_time[i]
+                        #slow_CPU baseline
+                        if (ISP_time[i] > CPU5_time[i-1]):
+                            CPU5_time[i] = ISP_time[i] + latency_CPU5 + latency_commit
+                            total_energy_CPU5 = total_energy_CPU5 + energy_CPU5 + energy_commit
+                            accumulation_CPU5 = accumulation_CPU5 + CPU5_time[i] - start_time[i]
+                        else:
+                            CPU5_time[i] = CPU5_time[i-1] + latency_CPU5 + latency_commit
+                            total_energy_CPU5 = total_energy_CPU5 + energy_CPU5 + energy_commit
+                            accumulation_CPU5 = accumulation_CPU5 + CPU5_time[i] - start_time[i]
+                        #GPU baseline
+                        if (ISP_time[i] > GPU_time[i-1]):
+                            GPU_time[i] = ISP_time[i] + latency_GPU + latency_commit
+                            total_energy_GPU = total_energy_GPU + energy_GPU + energy_commit
+                            accumulation_GPU = accumulation_GPU + GPU_time[i] - start_time[i]
+                        else:
+                            GPU_time[i] = GPU_time[i-1] + latency_GPU + latency_commit
+                            total_energy_GPU = total_energy_GPU + energy_GPU + energy_commit
+                            accumulation_GPU = accumulation_GPU + GPU_time[i] - start_time[i]
+                        #DSP baseline
+                        if (ISP_time[i] > DSP_time[i-1]):
+                            DSP_time[i] = ISP_time[i] + latency_DSP + latency_commit
+                            total_energy_DSP = total_energy_DSP + energy_DSP + energy_commit
+                            accumulation_DSP = accumulation_DSP + DSP_time[i] - start_time[i]
+                        else:
+                            DSP_time[i] = DSP_time[i-1] + latency_DSP + latency_commit
+                            total_energy_DSP = total_energy_DSP + energy_DSP + energy_commit
+                            accumulation_DSP = accumulation_DSP + DSP_time[i] - start_time[i]
+                        #accelerator baseline
+                        if (ISP_time[i] > accelerator_time[i-1]):
+                            accelerator_time[i] = ISP_time[i] + latency_accelerator + latency_commit
+                            total_energy_accelerator = total_energy_accelerator + energy_accelerator + energy_commit
+                            accumulation_accelerator = accumulation_accelerator + accelerator_time[i] - start_time[i]
+                        else:
+                            accelerator_time[i] = accelerator_time[i-1] + latency_accelerator + latency_commit
+                            total_energy_accelerator = total_energy_accelerator + energy_accelerator + energy_commit
+                            accumulation_accelerator = accumulation_accelerator + accelerator_time[i] - start_time[i]
+                        #spec_soc_latencymin, E<=Eb
+                        #energy_Eb_minL, latency_Eb_minL = runtime2(frames_predicted,latency_CPU1,latency_GPU,latency_DSP,latency_accelerator,energy_CPU1,energy_GPU,energy_DSP,energy_accelerator,E_budget)
+                        if (predict_time[i] > predict_time_p[i]):
+                            predict_time_p[i] = predict_time[i]
+
+                        if (predict_time[i] > predict_time_e[i]):
+                            predict_time_e[i] = predict_time[i]
+                        pk,tk= schedule.laschdule(energy_budget,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1)
+                        t = i - predict_frame_location
+                        if (t==1):
+                            if (pk[t] == 'acc'):
+                                end_time_perf[i] = predict_time_p[i] + latency_accelerator + latency_commit + 70
+                                ACC_signal = end_time_perf[i] - latency_commit
                                 DSP_signal = predict_time_p[i]
                                 GPU_signal = predict_time_p[i]
                                 CPU_signal = predict_time_p[i]
-                            else:
+                                total_energy_spec_perf = total_energy_spec_perf + energy_accelerator + energy_commit
+                            if (pk[t] == 'gpu'):
+                                end_time_perf[i] = predict_time_p[i] + latency_GPU + latency_commit
+                                GPU_signal = end_time_perf[i] - latency_commit
+                                ACC_signal = predict_time_p[i]
+                                DSP_signal = predict_time_p[i]
+                                CPU_signal = predict_time_p[i]
+                                total_energy_spec_perf = total_energy_spec_perf + energy_GPU + energy_commit
+                            if (pk[t] == 'dsp'):
+                                end_time_perf[i] = predict_time_p[i] + latency_DSP + latency_commit
+                                DSP_signal = end_time_perf[i] - latency_commit
+                                ACC_signal = predict_time_p[i]
+                                GPU_signal = predict_time_p[i]
+                                CPU_signal = predict_time_p[i]
+                                total_energy_spec_perf = total_energy_spec_perf + energy_DSP + energy_commit
+                            if (pk[t] == 'cpu'):
+                                end_time_perf[i] = predict_time_p[i] + latency_CPU1 + latency_commit
+                                CPU_signal = end_time_perf[i] - latency_commit
+                                DSP_signal = predict_time_p[i]
+                                GPU_signal = predict_time_p[i]
+                                ACC_signal = predict_time_p[i]
+                                total_energy_spec_perf = total_energy_spec_perf + energy_CPU1 + energy_commit
+                        else:
+                            if (pk[t] == 'acc'):
+                                end_time_perf[i] = ACC_signal + latency_accelerator + latency_commit
+                                ACC_signal = end_time_perf[i] - latency_commit
+                                DSP_signal = DSP_signal
+                                GPU_signal = GPU_signal
+                                CPU_signal = CPU_signal
+                                total_energy_spec_perf = total_energy_spec_perf + energy_accelerator + energy_commit
+                            if (pk[t] == 'gpu'):
+                                end_time_perf[i] = GPU_signal + latency_GPU + latency_commit
+                                GPU_signal = end_time_perf[i] - latency_commit
+                                ACC_signal = ACC_signal
+                                DSP_signal = DSP_signal
+                                CPU_signal = CPU_signal
+                                total_energy_spec_perf = total_energy_spec_perf + energy_GPU + energy_commit
+                            if (pk[t] == 'dsp'):
+                                end_time_perf[i] = DSP_signal + latency_DSP + latency_commit
+                                DSP_signal = end_time_perf[i] - latency_commit
+                                ACC_signal = ACC_signal
+                                GPU_signal = GPU_signal
+                                CPU_signal = CPU_signal
+                                total_energy_spec_perf = total_energy_spec_perf + energy_DSP + energy_commit
+                            if (pk[t] == 'cpu'):
+                                end_time_perf[i] = CPU_signal + latency_CPU1 + latency_commit
+                                CPU_signal = end_time_perf[i] - latency_CPU1
+                                DSP_signal = DSP_signal
+                                GPU_signal = GPU_signal
+                                ACC_signal = ACC_signal
+                                total_energy_spec_perf = total_energy_spec_perf + energy_CPU1 + energy_commit    
+                        if (ISP_time[i] > end_time_perf[i]):
+                            end_time_perf[i] = ISP_time[i]
+
+                        accumulation_spec_perf = accumulation_spec_perf + end_time_perf[i] - start_time[i]                
+                        #spec_soc_energymin, L<=Lb
+                        #energy_Lb_minE, latency_Lb_minE  = runtime1(frames_predicted,latency_CPU1,latency_GPU,latency_DSP,latency_accelerator,energy_CPU1,energy_GPU,energy_DSP,energy_accelerator,L_budget)
+                        pke, ekt = bestE.enschedule(latency_budget,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1)
+                        if (t==1):
+                            if (pke[t] == 'acc'):
+                                end_time_energy[i] = predict_time_e[i] + latency_accelerator + latency_commit + 70
+                                ACC_signale = predict_time_e[i] + latency_accelerator
+                                GPU_signale = predict_time_e[i]
+                                DSP_signale = predict_time_e[i]
+                                CPU_signale = predict_time_e[i]
+                                total_energy_spec_energy = total_energy_spec_energy + energy_accelerator + energy_commit
+                            if (pke[t] == 'gpu'):
+                                end_time_energy[i] = predict_time_e[i] + latency_GPU + latency_commit
+                                ACC_signale = predict_time_e[i]
+                                GPU_signale = predict_time_e[i] + latency_GPU
+                                DSP_signale = predict_time_e[i]
+                                CPU_signale = predict_time_e[i]
+                                total_energy_spec_energy = total_energy_spec_energy + energy_GPU + energy_commit
+                            if (pke[t] == 'dsp'):
+                                end_time_energy[i] = predict_time_e[i] + latency_DSP + latency_commit
+                                ACC_signale = predict_time_e[i]
+                                GPU_signale = predict_time_e[i]
+                                DSP_signale = predict_time_e[i] + latency_DSP
+                                CPU_signale = predict_time_e[i]
+                                total_energy_spec_energy = total_energy_spec_energy + energy_DSP + energy_commit
+                            if (pke[t] == 'cpu'):
+                                end_time_energy[i] = predict_time_e[i] + latency_CPU1 + latency_commit
+                                ACC_signale = predict_time_e[i]
+                                GPU_signale = predict_time_e[i]
+                                DSP_signale = predict_time_e[i]
+                                CPU_signale = predict_time_e[i] + latency_CPU1
+                                total_energy_spec_energy = total_energy_spec_energy + energy_CPU1 + energy_commit
+                        else:
+                            if (pke[t] == 'acc'):
+                                end_time_energy[i] = ACC_signale + latency_accelerator + latency_commit
+                                ACC_signale = end_time_energy[i] - latency_commit
+                                GPU_signale = predict_time_e[i]
+                                DSP_signale = predict_time_e[i]
+                                CPU_signale = predict_time_e[i]
+                                total_energy_spec_energy = total_energy_spec_energy + energy_accelerator + energy_commit
+                            if (pke[t] == 'gpu'):
+                                end_time_energy[i] = GPU_signale + latency_GPU + latency_commit
+                                ACC_signale = ACC_signale
+                                GPU_signale = end_time_perf[i] - latency_commit
+                                DSP_signale = DSP_signale
+                                CPU_signale = CPU_signale
+                                total_energy_spec_energy = total_energy_spec_energy + energy_GPU + energy_commit
+                            if (pke[t] == 'dsp'):
+                                end_time_energy[i] = DSP_signale + latency_DSP + latency_commit
+                                ACC_signale = ACC_signale
+                                GPU_signale = GPU_signale
+                                DSP_signale = end_time_perf[i] - latency_commit
+                                CPU_signale = predict_time_e[i]
+                                total_energy_spec_energy = total_energy_spec_energy + energy_DSP + energy_commit
+                            if (pke[t] == 'cpu'):
+                                end_time_energy[i] = CPU_signale + latency_CPU1 + latency_commit
+                                ACC_signale = ACC_signale
+                                GPU_signale = GPU_signale
+                                DSP_signale = DSP_signale
+                                CPU_signale = end_time_perf[i] - latency_commit
+                                total_energy_spec_energy = total_energy_spec_energy + energy_CPU1 + energy_commit
+                        if (ISP_time[i] > end_time_energy[i]):
+                            end_time_energy[i] = ISP_time[i] 
+                        accumulation_spec_energy = accumulation_spec_energy + end_time_energy[i] - start_time[i]
+
+                        if (t==10):
+                            for j in range(i+2,i+frames_predicted+2):
+                                predict_time_p[j] = end_time_perf[i]
+                                predict_time_e[j] = end_time_energy[i]                    
+                else:
+                    if (i-predict_frame_location)==1 or (i-predict_frame_location)==2 or (i-predict_frame_location)==3:
+                        start_time[i] = sensing_time[i-1]
+                        #sensing_time
+                        sensing_time[i] = start_time[i] + latency_sensing
+                        total_energy_CPU1 = total_energy_CPU1 + energy_sensing
+                        total_energy_CPU5 = total_energy_CPU5 + energy_sensing
+                        total_energy_GPU = total_energy_GPU + energy_sensing
+                        total_energy_DSP = total_energy_DSP + energy_sensing
+                        total_energy_accelerator = total_energy_accelerator + energy_sensing
+                        total_energy_spec_perf = total_energy_spec_perf + energy_sensing
+                        total_energy_spec_energy = total_energy_spec_energy + energy_sensing
+                        #ISP_time
+                        if (sensing_time[i] > ISP_time[i-1]):
+                            ISP_time[i] = sensing_time[i] + latency_ISP
+                            total_energy_CPU1 = total_energy_CPU1 + energy_ISP
+                            total_energy_CPU5 = total_energy_CPU5 + energy_ISP
+                            total_energy_GPU = total_energy_GPU + energy_ISP
+                            total_energy_DSP = total_energy_DSP + energy_ISP
+                            total_energy_accelerator = total_energy_accelerator + energy_ISP
+                            total_energy_spec_perf = total_energy_spec_perf + energy_ISP
+                            total_energy_spec_energy = total_energy_spec_energy + energy_ISP
+                        else:
+                            ISP_time[i] = ISP_time[i-1] + latency_ISP
+                            total_energy_CPU1 = total_energy_CPU1 + energy_ISP
+                            total_energy_CPU5 = total_energy_CPU5 + energy_ISP
+                            total_energy_GPU = total_energy_GPU + energy_ISP
+                            total_energy_DSP = total_energy_DSP + energy_ISP
+                            total_energy_accelerator = total_energy_accelerator + energy_ISP
+                            total_energy_spec_perf = total_energy_spec_perf + energy_ISP
+                            total_energy_spec_energy = total_energy_spec_energy + energy_ISP
+                        #fast_CPU baseline
+                        if (ISP_time[i] > CPU1_time[i-1]):
+                            CPU1_time[i] = ISP_time[i] + latency_CPU1 + latency_commit
+                            total_energy_CPU1 = total_energy_CPU1 + energy_CPU1 + energy_commit
+                            accumulation_CPU1 = accumulation_CPU1 + CPU1_time[i] - start_time[i]
+                        else:
+                            CPU1_time[i] = CPU1_time[i-1] + latency_CPU1 + latency_commit
+                            total_energy_CPU1 = total_energy_CPU1 + energy_CPU1 + energy_commit
+                            accumulation_CPU1 = accumulation_CPU1 + CPU1_time[i] - start_time[i]
+                        #slow_CPU baseline
+                        if (ISP_time[i] > CPU5_time[i-1]):
+                            CPU5_time[i] = ISP_time[i] + latency_CPU5 + latency_commit
+                            total_energy_CPU5 = total_energy_CPU5 + energy_CPU5 + energy_commit
+                            accumulation_CPU5 = accumulation_CPU5 + CPU5_time[i] - start_time[i]
+                        else:
+                            CPU5_time[i] = CPU5_time[i-1] + latency_CPU5 + latency_commit
+                            total_energy_CPU5 = total_energy_CPU5 + energy_CPU5 + energy_commit
+                            accumulation_CPU5 = accumulation_CPU5 + CPU5_time[i] - start_time[i]
+                        #GPU baseline
+                        if (ISP_time[i] > GPU_time[i-1]):
+                            GPU_time[i] = ISP_time[i] + latency_GPU + latency_commit
+                            total_energy_GPU = total_energy_GPU + energy_GPU + energy_commit
+                            accumulation_GPU = accumulation_GPU + GPU_time[i] - start_time[i]
+                        else:
+                            GPU_time[i] = GPU_time[i-1] + latency_GPU + latency_commit
+                            total_energy_GPU = total_energy_GPU + energy_GPU + energy_commit
+                            accumulation_GPU = accumulation_GPU + GPU_time[i] - start_time[i]
+                        #DSP baseline
+                        if (ISP_time[i] > DSP_time[i-1]):
+                            DSP_time[i] = ISP_time[i] + latency_DSP + latency_commit
+                            total_energy_DSP = total_energy_DSP + energy_DSP + energy_commit
+                            accumulation_DSP = accumulation_DSP + DSP_time[i] - start_time[i]
+                        else:
+                            DSP_time[i] = DSP_time[i-1] + latency_DSP + latency_commit
+                            total_energy_DSP = total_energy_DSP + energy_DSP + energy_commit
+                            accumulation_DSP = accumulation_DSP + DSP_time[i] - start_time[i]
+                        #accelerator baseline
+                        if (ISP_time[i] > accelerator_time[i-1]):
+                            accelerator_time[i] = ISP_time[i] + latency_accelerator + latency_commit
+                            total_energy_accelerator = total_energy_accelerator + energy_accelerator + energy_commit
+                            accumulation_accelerator = accumulation_accelerator + accelerator_time[i] - start_time[i]
+                        else:
+                            accelerator_time[i] = accelerator_time[i-1] + latency_accelerator + latency_commit
+                            total_energy_accelerator = total_energy_accelerator + energy_accelerator + energy_commit
+                            accumulation_accelerator = accumulation_accelerator + accelerator_time[i] - start_time[i]
+                        #spec_soc_latencymin, E<=Eb
+                        #energy_Eb_minL, latency_Eb_minL = runtime2(frames_predicted,latency_CPU1,latency_GPU,latency_DSP,latency_accelerator,energy_CPU1,energy_GPU,energy_DSP,energy_accelerator,E_budget)
+                        if (predict_time[i] > predict_time_p[i]):
+                            predict_time_p[i] = predict_time[i]
+
+                        if (predict_time[i] > predict_time_e[i]):
+                            predict_time_e[i] = predict_time[i]
+                        pk,tk= schedule.laschdule(energy_budget,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1)
+                        t = i - predict_frame_location
+                        if (t==1):
+                            if (pk[t] == 'acc'):
+                                if (ISP_time[i] + latency_check > predict_time_p[i]):
+                                    end_time_perf[i] = ISP_time[i] + latency_accelerator +latency_check + latency_commit + 70
+                                    ACC_signal = ISP_time[i] + latency_accelerator + 70
+                                    DSP_signal = predict_time_p[i]
+                                    GPU_signal = predict_time_p[i]
+                                    CPU_signal = predict_time_p[i]
+                                else:
+                                    end_time_perf[i] = predict_time_p[i] + latency_accelerator + latency_commit + 70
+                                    ACC_signal = predict_time_p[i] + latency_accelerator + 70
+                                    DSP_signal = predict_time_p[i]
+                                    GPU_signal = predict_time_p[i]
+                                    CPU_signal = predict_time_p[i]
+                                total_energy_spec_perf = total_energy_spec_perf + energy_accelerator + energy_commit
+                            if (pk[t] == 'gpu'):
+                                if (ISP_time[i] + latency_check > predict_time_p[i]):
+                                    end_time_perf[i] = ISP_time[i] + latency_GPU + latency_check + latency_commit
+                                    GPU_signal = ISP_time[i] + latency_GPU
+                                    DSP_signal = predict_time_p[i]
+                                    ACC_signal = predict_time_p[i]
+                                    CPU_signal = predict_time_p[i]
+                                else:
+                                    end_time_perf[i] = predict_time_p[i] + latency_GPU + latency_commit
+                                    GPU_signal = predict_time_p[i] + latency_GPU
+                                    ACC_signal = predict_time_p[i]
+                                    GPU_signal = predict_time_p[i]
+                                    CPU_signal = predict_time_p[i]
+                                total_energy_spec_perf = total_energy_spec_perf + energy_GPU + energy_commit
+                            if (pk[t] == 'dsp'):
+                                if (ISP_time[i] + latency_check> predict_time_p[i]):
+                                    end_time_perf[i] = ISP_time[i] + latency_DSP + latency_check + latency_commit
+                                    DSP_signal = ISP_time[i] + latency_DSP 
+                                    GPU_signal = predict_time_p[i]
+                                    ACC_signal = predict_time_p[i]
+                                    CPU_signal = predict_time_p[i]
+                                else:
+                                    end_time_perf[i] = predict_time_p[i] + latency_DSP + latency_commit
+                                    DSP_signal = predict_time_p[i] + latency_DSP
+                                    ACC_signal = predict_time_p[i]
+                                    GPU_signal = predict_time_p[i]
+                                    CPU_signal = predict_time_p[i]
+                                total_energy_spec_perf = total_energy_spec_perf + energy_DSP + energy_commit
+                            if (pk[t] == 'cpu'):
+                                if (ISP_time[i] + latency_check > predict_time_p[i]):
+                                    end_time_perf[i] = ISP_time[i] + latency_CPU1 + latency_check + latency_commit
+                                    CPU_signal = ISP_time[i] + latency_CPU1
+                                    DSP_signal = predict_time_p[i]
+                                    GPU_signal = predict_time_p[i]
+                                    ACC_signal = predict_time_p[i]                                
+                                else:
+                                    end_time_perf[i] = predict_time_p[i] + latency_CPU1 + latency_commit
+                                    CPU_signal = predict_time_p[i] + latency_CPU1
+                                    DSP_signal = predict_time_p[i]
+                                    GPU_signal = predict_time_p[i]
+                                    ACC_signal = predict_time_p[i]
+                                    total_energy_spec_perf = total_energy_spec_perf + energy_CPU1 + energy_commit
+                        else:
+                            if (pk[t] == 'acc'):
+                                if (ISP_time[i] + latency_check > ACC_signal):
+                                    end_time_perf[i] = ISP_time[i] + latency_accelerator + latency_check + latency_commit
+                                    ACC_signal = end_time_perf[i] - latency_commit
+                                    DSP_signal = DSP_signal
+                                    GPU_signal = GPU_signal
+                                    CPU_signal = CPU_signal
+                                else:
+                                    end_time_perf[i] = ACC_signal + latency_accelerator + latency_commit
+                                    ACC_signal = end_time_perf[i] - latency_commit
+                                    DSP_signal = DSP_signal
+                                    GPU_signal = GPU_signal
+                                    CPU_signal = CPU_signal
+                                total_energy_spec_perf = total_energy_spec_perf + energy_accelerator + energy_commit
+                            if (pk[t] == 'gpu'):
+                                if (ISP_time[i] +latency_check > GPU_signal):
+                                    end_time_perf[i] = ISP_time[i] + latency_GPU + latency_check + latency_commit
+                                    GPU_signal = end_time_perf[i] - latency_commit
+                                    ACC_signal = ACC_signal
+                                    CPU_signal = CPU_signal
+                                    DSP_signal = DSP_signal
+                                else:
+                                    end_time_perf[i] = GPU_signal + latency_GPU + latency_commit
+                                    GPU_signal = end_time_perf[i] - latency_commit
+                                    ACC_signal = ACC_signal
+                                    CPU_signal = CPU_signal
+                                    DSP_signal = DSP_signal
+                                total_energy_spec_perf = total_energy_spec_perf + energy_GPU + energy_commit
+                            if (pk[t] == 'dsp'):
+                                if (ISP_time[i] + latency_check > DSP_signal):
+                                    end_time_perf[i] = ISP_time[i] + latency_DSP + latency_check +latency_commit
+                                    DSP_signal = end_time_perf[i] - latency_commit
+                                    ACC_signal = ACC_signal
+                                    GPU_signal = GPU_signal
+                                    CPU_signal = CPU_signal                                
+                                else:
+                                    end_time_perf[i] = DSP_signal + latency_DSP + latency_commit
+                                    DSP_signal = end_time_perf[i] - latency_commit
+                                    ACC_signal = ACC_signal
+                                    GPU_signal = GPU_signal
+                                    CPU_signal = CPU_signal
+                                total_energy_spec_perf = total_energy_spec_perf + energy_DSP + energy_commit
+                            if (pk[t] == 'cpu'):
+                                if (ISP_time[i] + latency_check > CPU_signal):
+                                    end_time_perf[i] = ISP_time[i] + latency_CPU1 + latency_check +latency_commit
+                                    CPU_signal = end_time_perf[i] - latency_CPU1
+                                    DSP_signal = DSP_signal
+                                    GPU_signal = GPU_signal
+                                    ACC_signal = ACC_signal
+                                else:
+                                    end_time_perf[i] = CPU_signal + latency_CPU1 + latency_commit
+                                    CPU_signal = end_time_perf[i] - latency_CPU1
+                                    DSP_signal = DSP_signal
+                                    GPU_signal = GPU_signal
+                                    ACC_signal = ACC_signal
+                                total_energy_spec_perf = total_energy_spec_perf + energy_CPU1 + energy_commit    
+                        accumulation_spec_perf = accumulation_spec_perf + end_time_perf[i] - start_time[i]                
+                        #spec_soc_energymin, L<=Lb
+                        #energy_Lb_minE, latency_Lb_minE  = runtime1(frames_predicted,latency_CPU1,latency_GPU,latency_DSP,latency_accelerator,energy_CPU1,energy_GPU,energy_DSP,energy_accelerator,L_budget)
+                        pke, ekt = bestE.enschedule(latency_budget,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1)
+                        if (t==1):
+                            if (pke[t] == 'acc'):
+                                end_time_energy[i] = predict_time_e[i] + latency_accelerator + latency_commit + 70
+                                ACC_signale = end_time_energy[i] - latency_commit
+                                GPU_signale = predict_time_e[i]
+                                DSP_signale = predict_time_e[i]
+                                CPU_signale = predict_time_e[i]
+                                total_energy_spec_energy = total_energy_spec_energy + energy_accelerator + energy_commit
+                            if (pke[t] == 'gpu'):
+                                end_time_energy[i] = predict_time_e[i] + latency_GPU + latency_commit
+                                ACC_signale = predict_time_e[i]
+                                GPU_signale = predict_time_e[i] + latency_GPU
+                                DSP_signale = predict_time_e[i]
+                                CPU_signale = predict_time_e[i]
+                                total_energy_spec_energy = total_energy_spec_energy + energy_GPU + energy_commit
+                            if (pke[t] == 'dsp'):
+                                end_time_energy[i] = predict_time_e[i] + latency_DSP + latency_commit
+                                ACC_signale = predict_time_e[i]
+                                GPU_signale = predict_time_e[i]
+                                DSP_signale = predict_time_e[i] + latency_DSP
+                                CPU_signale = predict_time_e[i]
+                                total_energy_spec_energy = total_energy_spec_energy + energy_DSP + energy_commit
+                            if (pke[t] == 'cpu'):
+                                end_time_energy[i] = predict_time_e[i] + latency_CPU1 + latency_commit
+                                ACC_signale = predict_time_e[i]
+                                GPU_signale = predict_time_e[i]
+                                DSP_signale = predict_time_e[i]
+                                CPU_signale = predict_time_e[i] + latency_CPU1
+                                total_energy_spec_energy = total_energy_spec_energy + energy_CPU1 + energy_commit
+                        else:
+                            if (pke[t] == 'acc'):
+                                end_time_energy[i] = ACC_signale + latency_accelerator + latency_commit
+                                ACC_signale = end_time_energy[i] - latency_commit
+                                GPU_signale = predict_time_e[i]
+                                DSP_signale = predict_time_e[i]
+                                CPU_signale = predict_time_e[i]
+                                total_energy_spec_energy = total_energy_spec_energy + energy_accelerator + energy_commit
+                            if (pke[t] == 'gpu'):
+                                end_time_energy[i] = GPU_signale + latency_GPU + latency_commit
+                                ACC_signale = ACC_signale
+                                GPU_signale = end_time_perf[i] - latency_commit
+                                DSP_signale = DSP_signale
+                                CPU_signale = CPU_signale
+                                total_energy_spec_energy = total_energy_spec_energy + energy_GPU + energy_commit
+                            if (pke[t] == 'dsp'):
+                                end_time_energy[i] = DSP_signale + latency_DSP + latency_commit
+                                ACC_signale = ACC_signale
+                                GPU_signale = GPU_signale
+                                DSP_signale = end_time_perf[i] - latency_commit
+                                CPU_signale = predict_time_e[i]
+                                total_energy_spec_energy = total_energy_spec_energy + energy_DSP + energy_commit
+                            if (pke[t] == 'cpu'):
+                                end_time_energy[i] = CPU_signale + latency_CPU1 + latency_commit
+                                ACC_signale = ACC_signale
+                                GPU_signale = GPU_signale
+                                DSP_signale = DSP_signale
+                                CPU_signale = end_time_perf[i] - latency_commit
+                                total_energy_spec_energy = total_energy_spec_energy + energy_CPU1 + energy_commit
+
+                        accumulation_spec_energy = accumulation_spec_energy + end_time_energy[i] - start_time[i]
+
+                        if (t==10):
+                            for j in range(i+2,i+frames_predicted+2):
+                                predict_time_p[j] = end_time_perf[i]
+                                predict_time_e[j] = end_time_energy[i]                    
+
+                    else:
+                        start_time[i] = sensing_time[i-1]
+                        #sensing time
+                        sensing_time[i] = start_time[i] + latency_sensing
+                        total_energy_CPU1 = total_energy_CPU1 + energy_sensing
+                        total_energy_CPU5 = total_energy_CPU5 + energy_sensing
+                        total_energy_GPU = total_energy_GPU + energy_sensing
+                        total_energy_DSP = total_energy_DSP + energy_sensing
+                        total_energy_accelerator = total_energy_accelerator + energy_sensing
+                        #total_energy_spec_perf = total_energy_spec_perf + energy_sensing
+                        #total_energy_spec_energy = total_energy_spec_energy + energy_sensing
+                        #ISP time
+                        if (sensing_time[i] > ISP_time[i-1]):
+                            ISP_time[i] = sensing_time[i] + latency_ISP
+                            total_energy_CPU1 = total_energy_CPU1 + energy_ISP
+                            total_energy_CPU5 = total_energy_CPU5 + energy_ISP
+                            total_energy_GPU = total_energy_GPU + energy_ISP
+                            total_energy_DSP = total_energy_DSP + energy_ISP
+                            total_energy_accelerator = total_energy_accelerator + energy_ISP
+                            #total_energy_spec_perf = total_energy_spec_perf + energy_ISP
+                            #total_energy_spec_energy = total_energy_spec_energy + energy_ISP
+                        else:
+                            ISP_time[i] = ISP_time[i-1] + latency_ISP
+                            total_energy_CPU1 = total_energy_CPU1 + energy_ISP
+                            total_energy_CPU5 = total_energy_CPU5 + energy_ISP
+                            total_energy_GPU = total_energy_GPU + energy_ISP
+                            total_energy_DSP = total_energy_DSP + energy_ISP
+                            total_energy_accelerator = total_energy_accelerator + energy_ISP
+                            #total_energy_spec_perf = total_energy_spec_perf + energy_ISP
+                            #total_energy_spec_energy = total_energy_spec_energy + energy_ISP
+                        #fast_CPU baseline
+                        if (ISP_time[i] > CPU1_time[i-1]):
+                            CPU1_time[i] = ISP_time[i] + latency_CPU1 + latency_commit
+                            total_energy_CPU1 = total_energy_CPU1 + energy_CPU1 + energy_commit
+                            accumulation_CPU1 = accumulation_CPU1 + CPU1_time[i] - start_time[i]
+                        else:
+                            CPU1_time[i] = CPU1_time[i-1] + latency_CPU1 + latency_commit
+                            total_energy_CPU1 = total_energy_CPU1 + energy_CPU1 + energy_commit
+                            accumulation_CPU1 = accumulation_CPU1 + CPU1_time[i] - start_time[i]
+                        #slow_CPU baseline
+                        if (ISP_time[i] > CPU5_time[i-1]):
+                            CPU5_time[i] = ISP_time[i] + latency_CPU5 + latency_commit
+                            total_energy_CPU5 = total_energy_CPU5 + energy_CPU5 + energy_commit
+                            accumulation_CPU5 = accumulation_CPU5 + CPU5_time[i] - start_time[i]
+                        else:
+                            CPU5_time[i] = CPU5_time[i-1] + latency_CPU5 + latency_commit
+                            total_energy_CPU5 = total_energy_CPU5 + energy_CPU5 + energy_commit
+                            accumulation_CPU5 = accumulation_CPU5 + CPU5_time[i] - start_time[i]
+                        #GPU baseline
+                        if (ISP_time[i] > GPU_time[i-1]):
+                            GPU_time[i] = ISP_time[i] + latency_GPU + latency_commit
+                            total_energy_GPU = total_energy_GPU + energy_GPU + energy_commit
+                            accumulation_GPU = accumulation_GPU + GPU_time[i] - start_time[i]
+                        else:
+                            GPU_time[i] = GPU_time[i-1] + latency_GPU + latency_commit
+                            total_energy_GPU = total_energy_GPU + energy_GPU + energy_commit
+                            accumulation_GPU = accumulation_GPU + GPU_time[i] - start_time[i]
+                        #DSP baseline
+                        if (ISP_time[i] > DSP_time[i-1]):
+                            DSP_time[i] = ISP_time[i] + latency_DSP + latency_commit
+                            total_energy_DSP = total_energy_DSP + energy_DSP + energy_commit
+                            accumulation_DSP = accumulation_DSP + DSP_time[i] - start_time[i]
+                        else:
+                            DSP_time[i] = DSP_time[i-1] + latency_DSP + latency_commit
+                            total_energy_DSP = total_energy_DSP + energy_DSP + energy_commit
+                            accumulation_DSP = accumulation_DSP + DSP_time[i] - start_time[i]
+                        #accelerator baseline
+                        if (ISP_time[i] > accelerator_time[i-1]):
+                            accelerator_time[i] = ISP_time[i] + latency_accelerator + latency_commit
+                            total_energy_accelerator = total_energy_accelerator + energy_accelerator + energy_commit
+                            accumulation_accelerator = accumulation_accelerator + accelerator_time[i] - start_time[i]
+                        else:
+                            accelerator_time[i] = accelerator_time[i-1] + latency_accelerator + latency_commit
+                            total_energy_accelerator = total_energy_accelerator + energy_accelerator + energy_commit
+                            accumulation_accelerator = accumulation_accelerator + accelerator_time[i] - start_time[i]
+                        #spec_soc_latencymin, E<=Eb
+                        #energy_Eb_minL, latency_Eb_minL = runtime2(frames_predicted,latency_CPU1,latency_GPU,latency_DSP,latency_accelerator,energy_CPU1,energy_GPU,energy_DSP,energy_accelerator,E_budget)
+                        if (predict_time[i] > predict_time_p[i]):
+                            predict_time_p[i] = predict_time[i]
+
+                        if (predict_time[i] > predict_time_e[i]):
+                            predict_time_e[i] = predict_time[i]
+                        pk,tk= schedule.laschdule(energy_budget,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1)
+                        t = i - predict_frame_location
+                        if (t==1):
+                            if (pk[t] == 'acc'):
                                 end_time_perf[i] = predict_time_p[i] + latency_accelerator + latency_commit + 70
                                 ACC_signal = predict_time_p[i] + latency_accelerator + 70
                                 DSP_signal = predict_time_p[i]
                                 GPU_signal = predict_time_p[i]
                                 CPU_signal = predict_time_p[i]
-                            total_energy_spec_perf = total_energy_spec_perf + energy_accelerator + energy_commit
-                        if (pk[t] == 'gpu'):
-                            if (ISP_time[i] + latency_check > predict_time_p[i]):
-                                end_time_perf[i] = ISP_time[i] + latency_GPU + latency_check + latency_commit
-                                GPU_signal = ISP_time[i] + latency_GPU
-                                DSP_signal = predict_time_p[i]
-                                ACC_signal = predict_time_p[i]
-                                CPU_signal = predict_time_p[i]
-                            else:
+                                total_energy_spec_perf = total_energy_spec_perf + energy_accelerator + energy_commit
+                            if (pk[t] == 'gpu'):
                                 end_time_perf[i] = predict_time_p[i] + latency_GPU + latency_commit
                                 GPU_signal = predict_time_p[i] + latency_GPU
                                 ACC_signal = predict_time_p[i]
                                 GPU_signal = predict_time_p[i]
                                 CPU_signal = predict_time_p[i]
-                            total_energy_spec_perf = total_energy_spec_perf + energy_GPU + energy_commit
-                        if (pk[t] == 'dsp'):
-                            if (ISP_time[i] + latency_check> predict_time_p[i]):
-                                end_time_perf[i] = ISP_time[i] + latency_DSP + latency_check + latency_commit
-                                DSP_signal = ISP_time[i] + latency_DSP 
-                                GPU_signal = predict_time_p[i]
-                                ACC_signal = predict_time_p[i]
-                                CPU_signal = predict_time_p[i]
-                            else:
+                                total_energy_spec_perf = total_energy_spec_perf + energy_GPU + energy_commit
+                            if (pk[t] == 'dsp'):
                                 end_time_perf[i] = predict_time_p[i] + latency_DSP + latency_commit
                                 DSP_signal = predict_time_p[i] + latency_DSP
                                 ACC_signal = predict_time_p[i]
                                 GPU_signal = predict_time_p[i]
                                 CPU_signal = predict_time_p[i]
-                            total_energy_spec_perf = total_energy_spec_perf + energy_DSP + energy_commit
-                        if (pk[t] == 'cpu'):
-                            if (ISP_time[i] + latency_check > predict_time_p[i]):
-                                end_time_perf[i] = ISP_time[i] + latency_CPU1 + latency_check + latency_commit
-                                CPU_signal = ISP_time[i] + latency_CPU1
-                                DSP_signal = predict_time_p[i]
-                                GPU_signal = predict_time_p[i]
-                                ACC_signal = predict_time_p[i]                                
-                            else:
+                                total_energy_spec_perf = total_energy_spec_perf + energy_DSP + energy_commit
+                            if (pk[t] == 'cpu'):
                                 end_time_perf[i] = predict_time_p[i] + latency_CPU1 + latency_commit
                                 CPU_signal = predict_time_p[i] + latency_CPU1
                                 DSP_signal = predict_time_p[i]
                                 GPU_signal = predict_time_p[i]
                                 ACC_signal = predict_time_p[i]
                                 total_energy_spec_perf = total_energy_spec_perf + energy_CPU1 + energy_commit
-                    else:
-                        if (pk[t] == 'acc'):
-                            if (ISP_time[i] + latency_check > ACC_signal):
-                                end_time_perf[i] = ISP_time[i] + latency_accelerator + latency_check + latency_commit
-                                ACC_signal = end_time_perf[i] - latency_commit
-                                DSP_signal = DSP_signal
-                                GPU_signal = GPU_signal
-                                CPU_signal = CPU_signal
-                            else:
+                        else:
+                            if (pk[t] == 'acc'):
                                 end_time_perf[i] = ACC_signal + latency_accelerator + latency_commit
                                 ACC_signal = end_time_perf[i] - latency_commit
                                 DSP_signal = DSP_signal
                                 GPU_signal = GPU_signal
                                 CPU_signal = CPU_signal
-                            total_energy_spec_perf = total_energy_spec_perf + energy_accelerator + energy_commit
-                        if (pk[t] == 'gpu'):
-                            if (ISP_time[i] +latency_check > GPU_signal):
-                                end_time_perf[i] = ISP_time[i] + latency_GPU + latency_check + latency_commit
-                                GPU_signal = end_time_perf[i] - latency_commit
-                                ACC_signal = ACC_signal
-                                CPU_signal = CPU_signal
-                                DSP_signal = DSP_signal
-                            else:
+                                total_energy_spec_perf = total_energy_spec_perf + energy_accelerator + energy_commit
+                            if (pk[t] == 'gpu'):
                                 end_time_perf[i] = GPU_signal + latency_GPU + latency_commit
                                 GPU_signal = end_time_perf[i] - latency_commit
                                 ACC_signal = ACC_signal
-                                CPU_signal = CPU_signal
                                 DSP_signal = DSP_signal
-                            total_energy_spec_perf = total_energy_spec_perf + energy_GPU + energy_commit
-                        if (pk[t] == 'dsp'):
-                            if (ISP_time[i] + latency_check > DSP_signal):
-                                end_time_perf[i] = ISP_time[i] + latency_DSP + latency_check +latency_commit
-                                DSP_signal = end_time_perf[i] - latency_commit
-                                ACC_signal = ACC_signal
-                                GPU_signal = GPU_signal
-                                CPU_signal = CPU_signal                                
-                            else:
+                                CPU_signal = CPU_signal
+                                total_energy_spec_perf = total_energy_spec_perf + energy_GPU + energy_commit
+                            if (pk[t] == 'dsp'):
                                 end_time_perf[i] = DSP_signal + latency_DSP + latency_commit
                                 DSP_signal = end_time_perf[i] - latency_commit
                                 ACC_signal = ACC_signal
                                 GPU_signal = GPU_signal
                                 CPU_signal = CPU_signal
-                            total_energy_spec_perf = total_energy_spec_perf + energy_DSP + energy_commit
-                        if (pk[t] == 'cpu'):
-                            if (ISP_time[i] + latency_check > CPU_signal):
-                                end_time_perf[i] = ISP_time[i] + latency_CPU1 + latency_check +latency_commit
-                                CPU_signal = end_time_perf[i] - latency_CPU1
-                                DSP_signal = DSP_signal
-                                GPU_signal = GPU_signal
-                                ACC_signal = ACC_signal
-                            else:
+                                total_energy_spec_perf = total_energy_spec_perf + energy_DSP + energy_commit
+                            if (pk[t] == 'cpu'):
                                 end_time_perf[i] = CPU_signal + latency_CPU1 + latency_commit
                                 CPU_signal = end_time_perf[i] - latency_CPU1
                                 DSP_signal = DSP_signal
                                 GPU_signal = GPU_signal
                                 ACC_signal = ACC_signal
-                            total_energy_spec_perf = total_energy_spec_perf + energy_CPU1 + energy_commit    
-                    accumulation_spec_perf = accumulation_spec_perf + end_time_perf[i] - start_time[i]                
-                    #spec_soc_energymin, L<=Lb
-                    #energy_Lb_minE, latency_Lb_minE  = runtime1(frames_predicted,latency_CPU1,latency_GPU,latency_DSP,latency_accelerator,energy_CPU1,energy_GPU,energy_DSP,energy_accelerator,L_budget)
-                    pke, ekt = bestE.enschedule(latency_budget,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1)
-                    if (t==1):
-                        if (pke[t] == 'acc'):
-                            end_time_energy[i] = predict_time_e[i] + latency_accelerator + latency_commit + 70
-                            ACC_signale = end_time_energy[i] - latency_commit
-                            GPU_signale = predict_time_e[i]
-                            DSP_signale = predict_time_e[i]
-                            CPU_signale = predict_time_e[i]
-                            total_energy_spec_energy = total_energy_spec_energy + energy_accelerator + energy_commit
-                        if (pke[t] == 'gpu'):
-                            end_time_energy[i] = predict_time_e[i] + latency_GPU + latency_commit
-                            ACC_signale = predict_time_e[i]
-                            GPU_signale = predict_time_e[i] + latency_GPU
-                            DSP_signale = predict_time_e[i]
-                            CPU_signale = predict_time_e[i]
-                            total_energy_spec_energy = total_energy_spec_energy + energy_GPU + energy_commit
-                        if (pke[t] == 'dsp'):
-                            end_time_energy[i] = predict_time_e[i] + latency_DSP + latency_commit
-                            ACC_signale = predict_time_e[i]
-                            GPU_signale = predict_time_e[i]
-                            DSP_signale = predict_time_e[i] + latency_DSP
-                            CPU_signale = predict_time_e[i]
-                            total_energy_spec_energy = total_energy_spec_energy + energy_DSP + energy_commit
-                        if (pke[t] == 'cpu'):
-                            end_time_energy[i] = predict_time_e[i] + latency_CPU1 + latency_commit
-                            ACC_signale = predict_time_e[i]
-                            GPU_signale = predict_time_e[i]
-                            DSP_signale = predict_time_e[i]
-                            CPU_signale = predict_time_e[i] + latency_CPU1
-                            total_energy_spec_energy = total_energy_spec_energy + energy_CPU1 + energy_commit
-                    else:
-                        if (pke[t] == 'acc'):
-                            end_time_energy[i] = ACC_signale + latency_accelerator + latency_commit
-                            ACC_signale = end_time_energy[i] - latency_commit
-                            GPU_signale = predict_time_e[i]
-                            DSP_signale = predict_time_e[i]
-                            CPU_signale = predict_time_e[i]
-                            total_energy_spec_energy = total_energy_spec_energy + energy_accelerator + energy_commit
-                        if (pke[t] == 'gpu'):
-                            end_time_energy[i] = GPU_signale + latency_GPU + latency_commit
-                            ACC_signale = ACC_signale
-                            GPU_signale = end_time_perf[i] - latency_commit
-                            DSP_signale = DSP_signale
-                            CPU_signale = CPU_signale
-                            total_energy_spec_energy = total_energy_spec_energy + energy_GPU + energy_commit
-                        if (pke[t] == 'dsp'):
-                            end_time_energy[i] = DSP_signale + latency_DSP + latency_commit
-                            ACC_signale = ACC_signale
-                            GPU_signale = GPU_signale
-                            DSP_signale = end_time_perf[i] - latency_commit
-                            CPU_signale = predict_time_e[i]
-                            total_energy_spec_energy = total_energy_spec_energy + energy_DSP + energy_commit
-                        if (pke[t] == 'cpu'):
-                            end_time_energy[i] = CPU_signale + latency_CPU1 + latency_commit
-                            ACC_signale = ACC_signale
-                            GPU_signale = GPU_signale
-                            DSP_signale = DSP_signale
-                            CPU_signale = end_time_perf[i] - latency_commit
-                            total_energy_spec_energy = total_energy_spec_energy + energy_CPU1 + energy_commit
+                                total_energy_spec_perf = total_energy_spec_perf + energy_CPU1 + energy_commit
 
-                    accumulation_spec_energy = accumulation_spec_energy + end_time_energy[i] - start_time[i]
+                        accumulation_spec_perf = accumulation_spec_perf + end_time_perf[i] - start_time[i]                
+                        #spec_soc_energymin, L<=Lb
+                        #energy_Lb_minE, latency_Lb_minE  = runtime1(frames_predicted,latency_CPU1,latency_GPU,latency_DSP,latency_accelerator,energy_CPU1,energy_GPU,energy_DSP,energy_accelerator,L_budget)
+                        pke, ekt = bestE.enschedule(latency_budget,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1)
+                        if (t==1):
+                            if (pke[t] == 'acc'):
+                                end_time_energy[i] = predict_time_e[i] + latency_accelerator + latency_commit + 70
+                                ACC_signale = predict_time_e[i] + latency_accelerator + 70
+                                GPU_signale = predict_time_e[i]
+                                DSP_signale = predict_time_e[i]
+                                CPU_signale = predict_time_e[i]
+                                total_energy_spec_energy = total_energy_spec_energy + energy_accelerator + energy_commit
+                            if (pke[t] == 'gpu'):
+                                end_time_energy[i] = predict_time_e[i] + latency_GPU + latency_commit
+                                ACC_signale = predict_time_e[i]
+                                GPU_signale = predict_time_e[i] + latency_GPU
+                                DSP_signale = predict_time_e[i]
+                                CPU_signale = predict_time_e[i]
+                                total_energy_spec_energy = total_energy_spec_energy + energy_GPU + energy_commit
+                            if (pke[t] == 'dsp'):
+                                end_time_energy[i] = predict_time_e[i] + latency_DSP + latency_commit
+                                ACC_signale = predict_time_e[i]
+                                GPU_signale = predict_time_e[i]
+                                DSP_signale = predict_time_e[i] + latency_DSP
+                                CPU_signale = predict_time_e[i]
+                                total_energy_spec_energy = total_energy_spec_energy + energy_DSP + energy_commit
+                            if (pke[t] == 'cpu'):
+                                end_time_energy[i] = predict_time_e[i] + latency_CPU1 + latency_commit
+                                ACC_signale = predict_time_e[i]
+                                GPU_signale = predict_time_e[i]
+                                DSP_signale = predict_time_e[i]
+                                CPU_signale = predict_time_e[i] + latency_CPU1
+                                total_energy_spec_energy = total_energy_spec_energy + energy_CPU1 + energy_commit
+                        else:
+                            if (pke[t] == 'acc'):
+                                end_time_energy[i] = ACC_signale + latency_accelerator + latency_commit
+                                ACC_signale = end_time_energy[i] - latency_commit
+                                GPU_signale = predict_time_e[i]
+                                DSP_signale = predict_time_e[i]
+                                CPU_signale = predict_time_e[i]
+                                total_energy_spec_energy = total_energy_spec_energy + energy_accelerator + energy_commit
+                            if (pke[t] == 'gpu'):
+                                end_time_energy[i] = GPU_signale + latency_GPU + latency_commit
+                                ACC_signale = ACC_signale
+                                GPU_signale = end_time_perf[i] - latency_commit
+                                DSP_signale = DSP_signale
+                                CPU_signale = CPU_signale
+                                total_energy_spec_energy = total_energy_spec_energy + energy_GPU + energy_commit
+                            if (pke[t] == 'dsp'):
+                                end_time_energy[i] = DSP_signale + latency_DSP + latency_commit
+                                ACC_signale = ACC_signale
+                                GPU_signale = GPU_signale
+                                DSP_signale = end_time_perf[i] - latency_commit
+                                CPU_signale = predict_time_e[i]
+                                total_energy_spec_energy = total_energy_spec_energy + energy_DSP + energy_commit
+                            if (pke[t] == 'cpu'):
+                                end_time_energy[i] = CPU_signale + latency_CPU1 + latency_commit
+                                ACC_signale = ACC_signale
+                                GPU_signale = GPU_signale
+                                DSP_signale = DSP_signale
+                                CPU_signale = end_time_perf[i] - latency_commit
+                                total_energy_spec_energy = total_energy_spec_energy + energy_CPU1 + energy_commit                    
+                        accumulation_spec_energy = accumulation_spec_energy + end_time_energy[i] - start_time[i]
 
-                    if (t==10):
-                        for j in range(i+2,i+frames_predicted+2):
-                            predict_time_p[j] = end_time_perf[i]
-                            predict_time_e[j] = end_time_energy[i]                    
+                        if (t==10):
+                            for j in range(i+2,i+frames_predicted+2):
+                                predict_time_p[j] = end_time_perf[i]
+                                predict_time_e[j] = end_time_energy[i]
 
-                else:
-                    #check correct
-                    start_time[i] = sensing_time[i-1]
-                    #sensing time
-                    sensing_time[i] = start_time[i] + latency_sensing
-                    total_energy_CPU1 = total_energy_CPU1 + energy_sensing
-                    total_energy_CPU5 = total_energy_CPU5 + energy_sensing
-                    total_energy_GPU = total_energy_GPU + energy_sensing
-                    total_energy_DSP = total_energy_DSP + energy_sensing
-                    total_energy_accelerator = total_energy_accelerator + energy_sensing
-                    #total_energy_spec_perf = total_energy_spec_perf + energy_sensing
-                    #total_energy_spec_energy = total_energy_spec_energy + energy_sensing
-                    #ISP time
-                    if (sensing_time[i] > ISP_time[i-1]):
-                        ISP_time[i] = sensing_time[i] + latency_ISP
-                        total_energy_CPU1 = total_energy_CPU1 + energy_ISP
-                        total_energy_CPU5 = total_energy_CPU5 + energy_ISP
-                        total_energy_GPU = total_energy_GPU + energy_ISP
-                        total_energy_DSP = total_energy_DSP + energy_ISP
-                        total_energy_accelerator = total_energy_accelerator + energy_ISP
-                        #total_energy_spec_perf = total_energy_spec_perf + energy_ISP
-                        #total_energy_spec_energy = total_energy_spec_energy + energy_ISP
-                    else:
-                        ISP_time[i] = ISP_time[i-1] + latency_ISP
-                        total_energy_CPU1 = total_energy_CPU1 + energy_ISP
-                        total_energy_CPU5 = total_energy_CPU5 + energy_ISP
-                        total_energy_GPU = total_energy_GPU + energy_ISP
-                        total_energy_DSP = total_energy_DSP + energy_ISP
-                        total_energy_accelerator = total_energy_accelerator + energy_ISP
-                        #total_energy_spec_perf = total_energy_spec_perf + energy_ISP
-                        #total_energy_spec_energy = total_energy_spec_energy + energy_ISP
-                    #fast_CPU baseline
-                    if (ISP_time[i] > CPU1_time[i-1]):
-                        CPU1_time[i] = ISP_time[i] + latency_CPU1 + latency_commit
-                        total_energy_CPU1 = total_energy_CPU1 + energy_CPU1 + energy_commit
-                        accumulation_CPU1 = accumulation_CPU1 + CPU1_time[i] - start_time[i]
-                    else:
-                        CPU1_time[i] = CPU1_time[i-1] + latency_CPU1 + latency_commit
-                        total_energy_CPU1 = total_energy_CPU1 + energy_CPU1 + energy_commit
-                        accumulation_CPU1 = accumulation_CPU1 + CPU1_time[i] - start_time[i]
-                    #slow_CPU baseline
-                    if (ISP_time[i] > CPU5_time[i-1]):
-                        CPU5_time[i] = ISP_time[i] + latency_CPU5 + latency_commit
-                        total_energy_CPU5 = total_energy_CPU5 + energy_CPU5 + energy_commit
-                        accumulation_CPU5 = accumulation_CPU5 + CPU5_time[i] - start_time[i]
-                    else:
-                        CPU5_time[i] = CPU5_time[i-1] + latency_CPU5 + latency_commit
-                        total_energy_CPU5 = total_energy_CPU5 + energy_CPU5 + energy_commit
-                        accumulation_CPU5 = accumulation_CPU5 + CPU5_time[i] - start_time[i]
-                    #GPU baseline
-                    if (ISP_time[i] > GPU_time[i-1]):
-                        GPU_time[i] = ISP_time[i] + latency_GPU + latency_commit
-                        total_energy_GPU = total_energy_GPU + energy_GPU + energy_commit
-                        accumulation_GPU = accumulation_GPU + GPU_time[i] - start_time[i]
-                    else:
-                        GPU_time[i] = GPU_time[i-1] + latency_GPU + latency_commit
-                        total_energy_GPU = total_energy_GPU + energy_GPU + energy_commit
-                        accumulation_GPU = accumulation_GPU + GPU_time[i] - start_time[i]
-                    #DSP baseline
-                    if (ISP_time[i] > DSP_time[i-1]):
-                        DSP_time[i] = ISP_time[i] + latency_DSP + latency_commit
-                        total_energy_DSP = total_energy_DSP + energy_DSP + energy_commit
-                        accumulation_DSP = accumulation_DSP + DSP_time[i] - start_time[i]
-                    else:
-                        DSP_time[i] = DSP_time[i-1] + latency_DSP + latency_commit
-                        total_energy_DSP = total_energy_DSP + energy_DSP + energy_commit
-                        accumulation_DSP = accumulation_DSP + DSP_time[i] - start_time[i]
-                    #accelerator baseline
-                    if (ISP_time[i] > accelerator_time[i-1]):
-                        accelerator_time[i] = ISP_time[i] + latency_accelerator + latency_commit
-                        total_energy_accelerator = total_energy_accelerator + energy_accelerator + energy_commit
-                        accumulation_accelerator = accumulation_accelerator + accelerator_time[i] - start_time[i]
-                    else:
-                        accelerator_time[i] = accelerator_time[i-1] + latency_accelerator + latency_commit
-                        total_energy_accelerator = total_energy_accelerator + energy_accelerator + energy_commit
-                        accumulation_accelerator = accumulation_accelerator + accelerator_time[i] - start_time[i]
-                    #spec_soc_latencymin, E<=Eb
-                    #energy_Eb_minL, latency_Eb_minL = runtime2(frames_predicted,latency_CPU1,latency_GPU,latency_DSP,latency_accelerator,energy_CPU1,energy_GPU,energy_DSP,energy_accelerator,E_budget)
-                    if (predict_time[i] > predict_time_p[i]):
-                        predict_time_p[i] = predict_time[i]
 
-                    if (predict_time[i] > predict_time_e[i]):
-                        predict_time_e[i] = predict_time[i]
-                    pk,tk= schedule.laschdule(energy_budget,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1)
-                    t = i - predict_frame_location
-                    if (t==1):
-                        if (pk[t] == 'acc'):
-                            end_time_perf[i] = predict_time_p[i] + latency_accelerator + latency_commit + 70
-                            ACC_signal = end_time_perf[i] - latency_commit
-                            DSP_signal = predict_time_p[i]
-                            GPU_signal = predict_time_p[i]
-                            CPU_signal = predict_time_p[i]
-                            total_energy_spec_perf = total_energy_spec_perf + energy_accelerator + energy_commit
-                        if (pk[t] == 'gpu'):
-                            end_time_perf[i] = predict_time_p[i] + latency_GPU + latency_commit
-                            GPU_signal = end_time_perf[i] - latency_commit
-                            ACC_signal = predict_time_p[i]
-                            DSP_signal = predict_time_p[i]
-                            CPU_signal = predict_time_p[i]
-                            total_energy_spec_perf = total_energy_spec_perf + energy_GPU + energy_commit
-                        if (pk[t] == 'dsp'):
-                            end_time_perf[i] = predict_time_p[i] + latency_DSP + latency_commit
-                            DSP_signal = end_time_perf[i] - latency_commit
-                            ACC_signal = predict_time_p[i]
-                            GPU_signal = predict_time_p[i]
-                            CPU_signal = predict_time_p[i]
-                            total_energy_spec_perf = total_energy_spec_perf + energy_DSP + energy_commit
-                        if (pk[t] == 'cpu'):
-                            end_time_perf[i] = predict_time_p[i] + latency_CPU1 + latency_commit
-                            CPU_signal = end_time_perf[i] - latency_commit
-                            DSP_signal = predict_time_p[i]
-                            GPU_signal = predict_time_p[i]
-                            ACC_signal = predict_time_p[i]
-                            total_energy_spec_perf = total_energy_spec_perf + energy_CPU1 + energy_commit
-                    else:
-                        if (pk[t] == 'acc'):
-                            end_time_perf[i] = ACC_signal + latency_accelerator + latency_commit
-                            ACC_signal = end_time_perf[i] - latency_commit
-                            DSP_signal = DSP_signal
-                            GPU_signal = GPU_signal
-                            CPU_signal = CPU_signal
-                            total_energy_spec_perf = total_energy_spec_perf + energy_accelerator + energy_commit
-                        if (pk[t] == 'gpu'):
-                            end_time_perf[i] = GPU_signal + latency_GPU + latency_commit
-                            GPU_signal = end_time_perf[i] - latency_commit
-                            ACC_signal = ACC_signal
-                            DSP_signal = DSP_signal
-                            CPU_signal = CPU_signal
-                            total_energy_spec_perf = total_energy_spec_perf + energy_GPU + energy_commit
-                        if (pk[t] == 'dsp'):
-                            end_time_perf[i] = DSP_signal + latency_DSP + latency_commit
-                            DSP_signal = end_time_perf[i] - latency_commit
-                            ACC_signal = ACC_signal
-                            GPU_signal = GPU_signal
-                            CPU_signal = CPU_signal
-                            total_energy_spec_perf = total_energy_spec_perf + energy_DSP + energy_commit
-                        if (pk[t] == 'cpu'):
-                            end_time_perf[i] = CPU_signal + latency_CPU1 + latency_commit
-                            CPU_signal = end_time_perf[i] - latency_CPU1
-                            DSP_signal = DSP_signal
-                            GPU_signal = GPU_signal
-                            ACC_signal = ACC_signal
-                            total_energy_spec_perf = total_energy_spec_perf + energy_CPU1 + energy_commit    
-                    if (ISP_time[i] > end_time_perf[i]):
-                        end_time_perf[i] = ISP_time[i]
 
-                    accumulation_spec_perf = accumulation_spec_perf + end_time_perf[i] - start_time[i]                
-                    #spec_soc_energymin, L<=Lb
-                    #energy_Lb_minE, latency_Lb_minE  = runtime1(frames_predicted,latency_CPU1,latency_GPU,latency_DSP,latency_accelerator,energy_CPU1,energy_GPU,energy_DSP,energy_accelerator,L_budget)
-                    pke, ekt = bestE.enschedule(latency_budget,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1)
-                    if (t==1):
-                        if (pke[t] == 'acc'):
-                            end_time_energy[i] = predict_time_e[i] + latency_accelerator + latency_commit + 70
-                            ACC_signale = predict_time_e[i] + latency_accelerator
-                            GPU_signale = predict_time_e[i]
-                            DSP_signale = predict_time_e[i]
-                            CPU_signale = predict_time_e[i]
-                            total_energy_spec_energy = total_energy_spec_energy + energy_accelerator + energy_commit
-                        if (pke[t] == 'gpu'):
-                            end_time_energy[i] = predict_time_e[i] + latency_GPU + latency_commit
-                            ACC_signale = predict_time_e[i]
-                            GPU_signale = predict_time_e[i] + latency_GPU
-                            DSP_signale = predict_time_e[i]
-                            CPU_signale = predict_time_e[i]
-                            total_energy_spec_energy = total_energy_spec_energy + energy_GPU + energy_commit
-                        if (pke[t] == 'dsp'):
-                            end_time_energy[i] = predict_time_e[i] + latency_DSP + latency_commit
-                            ACC_signale = predict_time_e[i]
-                            GPU_signale = predict_time_e[i]
-                            DSP_signale = predict_time_e[i] + latency_DSP
-                            CPU_signale = predict_time_e[i]
-                            total_energy_spec_energy = total_energy_spec_energy + energy_DSP + energy_commit
-                        if (pke[t] == 'cpu'):
-                            end_time_energy[i] = predict_time_e[i] + latency_CPU1 + latency_commit
-                            ACC_signale = predict_time_e[i]
-                            GPU_signale = predict_time_e[i]
-                            DSP_signale = predict_time_e[i]
-                            CPU_signale = predict_time_e[i] + latency_CPU1
-                            total_energy_spec_energy = total_energy_spec_energy + energy_CPU1 + energy_commit
-                    else:
-                        if (pke[t] == 'acc'):
-                            end_time_energy[i] = ACC_signale + latency_accelerator + latency_commit
-                            ACC_signale = end_time_energy[i] - latency_commit
-                            GPU_signale = predict_time_e[i]
-                            DSP_signale = predict_time_e[i]
-                            CPU_signale = predict_time_e[i]
-                            total_energy_spec_energy = total_energy_spec_energy + energy_accelerator + energy_commit
-                        if (pke[t] == 'gpu'):
-                            end_time_energy[i] = GPU_signale + latency_GPU + latency_commit
-                            ACC_signale = ACC_signale
-                            GPU_signale = end_time_perf[i] - latency_commit
-                            DSP_signale = DSP_signale
-                            CPU_signale = CPU_signale
-                            total_energy_spec_energy = total_energy_spec_energy + energy_GPU + energy_commit
-                        if (pke[t] == 'dsp'):
-                            end_time_energy[i] = DSP_signale + latency_DSP + latency_commit
-                            ACC_signale = ACC_signale
-                            GPU_signale = GPU_signale
-                            DSP_signale = end_time_perf[i] - latency_commit
-                            CPU_signale = predict_time_e[i]
-                            total_energy_spec_energy = total_energy_spec_energy + energy_DSP + energy_commit
-                        if (pke[t] == 'cpu'):
-                            end_time_energy[i] = CPU_signale + latency_CPU1 + latency_commit
-                            ACC_signale = ACC_signale
-                            GPU_signale = GPU_signale
-                            DSP_signale = DSP_signale
-                            CPU_signale = end_time_perf[i] - latency_commit
-                            total_energy_spec_energy = total_energy_spec_energy + energy_CPU1 + energy_commit
-                    if (ISP_time[i] > end_time_energy[i]):
-                        end_time_energy[i] = ISP_time[i] 
-                    accumulation_spec_energy = accumulation_spec_energy + end_time_energy[i] - start_time[i]
-
-                    if (t==10):
-                        for j in range(i+2,i+frames_predicted+2):
-                            predict_time_p[j] = end_time_perf[i]
-                            predict_time_e[j] = end_time_energy[i]                    
+                
 
 
 

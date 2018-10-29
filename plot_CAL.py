@@ -320,23 +320,37 @@ def figure7b():
 	ACC - 27773.0
 	FCFS - 8025.6
 	HOLD - 7655.6
-	100 - 26360
-	200-22580
-	300-15067
-	400-7185.61
-	500-7185.61
-	600-7185.61
 
-	SVSoC_spec,th_1 7185.69
-	SVSoC_spec,th_0.9 7185.69
-	SVSoC_spec,th_0.8 7185.69
-	SVSoC_spec,th_0.7 7185.69
+	20 - 26360
+	25-22580
+	35-15067
+	44-7185.61
+	
+
+	SVSoC_spec,th_1 7185.73
+	SVSoC_spec,th_0.9 7185.73
+	SVSoC_spec,th_0.8 7185.73
+	SVSoC_spec,th_0.7 7185.73
 	SVSoC_spec,th_0.6 7185.61
 	SVSoC_spec,th_0.5 7185.61
-	SVSoC_spec,th_0.4 7185.69
-	SVSoC_spec,th_0.3 7185.69
+	SVSoC_spec,th_0.4 7185.61
+	SVSoC_spec,th_0.3 7185.61
 	SVSoC_spec,th_0.2 7185.61
 	SVSoC_spec,th_0.1 7185.61
+
+	th=0.8
+	103-26360
+	107-18813
+	112-15067
+	117-11318
+	122-7185.61
+
+
+	
+
+
+
+
 
 
 def main():

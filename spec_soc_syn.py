@@ -1635,7 +1635,8 @@ def main():
                             for j in range(i+2,i+frames_predicted+2):
                                 predict_time_p[j] = end_time_perf[i]
                                 predict_time_e[j] = end_time_energy[i]
-
+            total_energy_spec_energy = total_energy_spec_energy + energy_check
+            total_energy_spec_perf = total_energy_spec_perf + energy_check
 
 
                 

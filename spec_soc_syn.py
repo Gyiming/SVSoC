@@ -380,8 +380,8 @@ def main():
                 t = i - predict_frame_location
                 if (t==1):
                     if (pk[t] == 'acc'):
-                        end_time_perf[i] = predict_time_p[i] + latency_accelerator + latency_commit + 70
-                        ACC_signal = predict_time_p[i] + latency_accelerator + 70
+                        end_time_perf[i] = predict_time_p[i] + latency_accelerator + latency_commit + latency_accelerator - latency_predict
+                        ACC_signal = predict_time_p[i] + latency_accelerator + latency_accelerator - latency_predict
                         DSP_signal = predict_time_p[i]
                         GPU_signal = predict_time_p[i]
                         CPU_signal = predict_time_p[i]
@@ -443,8 +443,8 @@ def main():
                 pke, ekt = bestE.enschedule(latency_budget,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1)
                 if (t==1):
                     if (pke[t] == 'acc'):
-                        end_time_energy[i] = predict_time_e[i] + latency_accelerator + latency_commit + 70
-                        ACC_signale = predict_time_e[i] + latency_accelerator + 70
+                        end_time_energy[i] = predict_time_e[i] + latency_accelerator + latency_commit + latency_accelerator - latency_predict
+                        ACC_signale = predict_time_e[i] + latency_accelerator + latency_accelerator - latency_predict
                         GPU_signale = predict_time_e[i]
                         DSP_signale = predict_time_e[i]
                         CPU_signale = predict_time_e[i]
@@ -759,14 +759,14 @@ def main():
                         if (t==1):
                             if (pk[t] == 'acc'):
                                 if (ISP_time[i] + latency_check > predict_time_p[i]):
-                                    end_time_perf[i] = ISP_time[i] + latency_accelerator +latency_check + latency_commit + 70
-                                    ACC_signal = ISP_time[i] + latency_accelerator + 70
+                                    end_time_perf[i] = ISP_time[i] + latency_accelerator +latency_check + latency_commit + latency_accelerator - latency_predict
+                                    ACC_signal = ISP_time[i] + latency_accelerator + latency_accelerator - latency_predict
                                     DSP_signal = predict_time_p[i]
                                     GPU_signal = predict_time_p[i]
                                     CPU_signal = predict_time_p[i]
                                 else:
-                                    end_time_perf[i] = predict_time_p[i] + latency_accelerator + latency_commit + 70
-                                    ACC_signal = predict_time_p[i] + latency_accelerator + 70
+                                    end_time_perf[i] = predict_time_p[i] + latency_accelerator + latency_commit + latency_accelerator - latency_predict
+                                    ACC_signal = predict_time_p[i] + latency_accelerator + latency_accelerator - latency_predict
                                     DSP_signal = predict_time_p[i]
                                     GPU_signal = predict_time_p[i]
                                     CPU_signal = predict_time_p[i]
@@ -876,7 +876,7 @@ def main():
                         pke, ekt = bestE.enschedule(latency_budget,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1)
                         if (t==1):
                             if (pke[t] == 'acc'):
-                                end_time_energy[i] = predict_time_e[i] + latency_accelerator + latency_commit + 70
+                                end_time_energy[i] = predict_time_e[i] + latency_accelerator + latency_commit + latency_accelerator - latency_predict
                                 ACC_signale = end_time_energy[i] - latency_commit
                                 GPU_signale = predict_time_e[i]
                                 DSP_signale = predict_time_e[i]
@@ -1026,7 +1026,7 @@ def main():
                         t = i - predict_frame_location
                         if (t==1):
                             if (pk[t] == 'acc'):
-                                end_time_perf[i] = predict_time_p[i] + latency_accelerator + latency_commit + 70
+                                end_time_perf[i] = predict_time_p[i] + latency_accelerator + latency_commit + latency_accelerator - latency_predict
                                 ACC_signal = end_time_perf[i] - latency_commit
                                 DSP_signal = predict_time_p[i]
                                 GPU_signal = predict_time_p[i]
@@ -1243,14 +1243,14 @@ def main():
                         if (t==1):
                             if (pk[t] == 'acc'):
                                 if (ISP_time[i] + latency_check > predict_time_p[i]):
-                                    end_time_perf[i] = ISP_time[i] + latency_accelerator +latency_check + latency_commit + 70
-                                    ACC_signal = ISP_time[i] + latency_accelerator + 70
+                                    end_time_perf[i] = ISP_time[i] + latency_accelerator +latency_check + latency_commit + latency_accelerator - latency_predict
+                                    ACC_signal = ISP_time[i] + latency_accelerator + latency_accelerator - latency_predict
                                     DSP_signal = predict_time_p[i]
                                     GPU_signal = predict_time_p[i]
                                     CPU_signal = predict_time_p[i]
                                 else:
-                                    end_time_perf[i] = predict_time_p[i] + latency_accelerator + latency_commit + 70
-                                    ACC_signal = predict_time_p[i] + latency_accelerator + 70
+                                    end_time_perf[i] = predict_time_p[i] + latency_accelerator + latency_commit + latency_accelerator - latency_predict
+                                    ACC_signal = predict_time_p[i] + latency_accelerator + latency_accelerator - latency_predict
                                     DSP_signal = predict_time_p[i]
                                     GPU_signal = predict_time_p[i]
                                     CPU_signal = predict_time_p[i]
@@ -1360,7 +1360,7 @@ def main():
                         pke, ekt = bestE.enschedule(latency_budget,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1)
                         if (t==1):
                             if (pke[t] == 'acc'):
-                                end_time_energy[i] = predict_time_e[i] + latency_accelerator + latency_commit + 70
+                                end_time_energy[i] = predict_time_e[i] + latency_accelerator + latency_commit + latency_accelerator - latency_predict
                                 ACC_signale = end_time_energy[i] - latency_commit
                                 GPU_signale = predict_time_e[i]
                                 DSP_signale = predict_time_e[i]
@@ -1510,8 +1510,8 @@ def main():
                         t = i - predict_frame_location
                         if (t==1):
                             if (pk[t] == 'acc'):
-                                end_time_perf[i] = predict_time_p[i] + latency_accelerator + latency_commit + 70
-                                ACC_signal = predict_time_p[i] + latency_accelerator + 70
+                                end_time_perf[i] = predict_time_p[i] + latency_accelerator + latency_commit + latency_accelerator - latency_predict
+                                ACC_signal = predict_time_p[i] + latency_accelerator + latency_accelerator - latency_predict
                                 DSP_signal = predict_time_p[i]
                                 GPU_signal = predict_time_p[i]
                                 CPU_signal = predict_time_p[i]
@@ -1573,8 +1573,8 @@ def main():
                         pke, ekt = bestE.enschedule(latency_budget,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1)
                         if (t==1):
                             if (pke[t] == 'acc'):
-                                end_time_energy[i] = predict_time_e[i] + latency_accelerator + latency_commit + 70
-                                ACC_signale = predict_time_e[i] + latency_accelerator + 70
+                                end_time_energy[i] = predict_time_e[i] + latency_accelerator + latency_commit + latency_accelerator - latency_predict
+                                ACC_signale = predict_time_e[i] + latency_accelerator + latency_accelerator - latency_predict
                                 GPU_signale = predict_time_e[i]
                                 DSP_signale = predict_time_e[i]
                                 CPU_signale = predict_time_e[i]

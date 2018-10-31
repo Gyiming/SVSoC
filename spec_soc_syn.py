@@ -671,6 +671,8 @@ def main():
 
             else:
                 if (i<=app_degree):
+                    total_energy_spec_energy = total_energy_spec_energy + energy_check
+                    total_energy_spec_perf = total_energy_spec_perf + energy_check
                     if (ssim_real[i] <accuracy):
                     #check wrong
                         #predict_frame_location = i;
@@ -1158,6 +1160,8 @@ def main():
                                 predict_time_e[j] = end_time_energy[i]                    
                 else:
                     if (i-predict_frame_location)==1 or (i-predict_frame_location)==2 or (i-predict_frame_location)==3:
+                        total_energy_spec_energy = total_energy_spec_energy + energy_check
+                        total_energy_spec_perf = total_energy_spec_perf + energy_check
                         if (ssim_real[i] <accuracy):
                         #check wrong
                             #predict_frame_location = i;
@@ -1855,8 +1859,7 @@ def main():
                             for j in range(i+2,i+frames_predicted+2):
                                 predict_time_p[j] = end_time_perf[i]
                                 predict_time_e[j] = end_time_energy[i]
-            total_energy_spec_energy = total_energy_spec_energy + energy_check
-            total_energy_spec_perf = total_energy_spec_perf + energy_check
+            
 
 
 

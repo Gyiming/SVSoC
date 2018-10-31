@@ -952,8 +952,8 @@ def main():
                         total_energy_GPU = total_energy_GPU + energy_sensing
                         total_energy_DSP = total_energy_DSP + energy_sensing
                         total_energy_accelerator = total_energy_accelerator + energy_sensing
-                        #total_energy_spec_perf = total_energy_spec_perf + energy_sensing
-                        #total_energy_spec_energy = total_energy_spec_energy + energy_sensing
+                        total_energy_spec_perf = total_energy_spec_perf + energy_sensing
+                        total_energy_spec_energy = total_energy_spec_energy + energy_sensing
                         #ISP time
                         if (sensing_time[i] > ISP_time[i-1]):
                             ISP_time[i] = sensing_time[i] + latency_ISP
@@ -962,8 +962,8 @@ def main():
                             total_energy_GPU = total_energy_GPU + energy_ISP
                             total_energy_DSP = total_energy_DSP + energy_ISP
                             total_energy_accelerator = total_energy_accelerator + energy_ISP
-                            #total_energy_spec_perf = total_energy_spec_perf + energy_ISP
-                            #total_energy_spec_energy = total_energy_spec_energy + energy_ISP
+                            total_energy_spec_perf = total_energy_spec_perf + energy_ISP
+                            total_energy_spec_energy = total_energy_spec_energy + energy_ISP
                         else:
                             ISP_time[i] = ISP_time[i-1] + latency_ISP
                             total_energy_CPU1 = total_energy_CPU1 + energy_ISP
@@ -971,8 +971,8 @@ def main():
                             total_energy_GPU = total_energy_GPU + energy_ISP
                             total_energy_DSP = total_energy_DSP + energy_ISP
                             total_energy_accelerator = total_energy_accelerator + energy_ISP
-                            #total_energy_spec_perf = total_energy_spec_perf + energy_ISP
-                            #total_energy_spec_energy = total_energy_spec_energy + energy_ISP
+                            total_energy_spec_perf = total_energy_spec_perf + energy_ISP
+                            total_energy_spec_energy = total_energy_spec_energy + energy_ISP
                         #fast_CPU baseline
                         if (ISP_time[i] > CPU1_time[i-1]):
                             CPU1_time[i] = ISP_time[i] + latency_CPU1 + latency_commit

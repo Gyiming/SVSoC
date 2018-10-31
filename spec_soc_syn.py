@@ -127,6 +127,7 @@ def main():
         accuracy = float(config.get("info","accuracy"))
         energy_budget = float(config.get("info","energy_budget"))
         latency_budget = float(config.get("info","latency_budget"))
+        app_degree = int(config.get("info","approximation_degree"))
     pk = [0 for i in range(1,11)]
     tk = [0 for i in range(1,11)]
     pke = [0 for i in range(1,11)]
@@ -669,7 +670,7 @@ def main():
                     predict_time[j] = ISP_time[i] + latency_predict
 
             else:
-                if (i<=132):
+                if (i<=app_degree):
                     if (ssim_real[i] <accuracy):
                     #check wrong
                         #predict_frame_location = i;
@@ -1637,6 +1638,8 @@ def main():
                                 predict_time_e[j] = end_time_energy[i]
             total_energy_spec_energy = total_energy_spec_energy + energy_check
             total_energy_spec_perf = total_energy_spec_perf + energy_check
+
+
 
 
                 

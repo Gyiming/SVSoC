@@ -124,7 +124,7 @@ def laschdule(Ebudget,Ea,Eb,Ec,Ed,La,Lb,Lc,Ld):
 				a[j] = a[i]
 				b[j] = b[i]
 				c[j] = c[i]
-				d[j] = d[i] + Lde
+				d[j] = d[i] + Ld
 			Ebudget = Ebudget - Ed
 
 	#for i in range(1,11):

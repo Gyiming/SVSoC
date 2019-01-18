@@ -92,38 +92,38 @@ def main():
         accelerator_enable = int(config.get("info","accelerator_enable"))
         frames_predicted = int(config.get("info","frames_predicted"))
         frames_checked = int(config.get("info","frames_checked"))
-        latency_sensing = int(config.get("info","latency_sensing"))
-        latency_ISP = int(config.get("info","latency_ISP"))
-        latency_CPU1 = int(config.get("info","latency_CPU1"))
-        latency_CPU2 = int(config.get("info","latency_CPU2"))
-        latency_CPU3 = int(config.get("info","latency_CPU3"))
-        latency_CPU4 = int(config.get("info","latency_CPU4"))
-        latency_CPU5 = int(config.get("info","latency_CPU5"))
-        latency_CPU6 = int(config.get("info","latency_CPU6"))
-        latency_CPU7 = int(config.get("info","latency_CPU7"))
-        latency_CPU8 = int(config.get("info","latency_CPU8"))
-        latency_GPU = int(config.get("info","latency_GPU"))
-        latency_DSP = int(config.get("info","latency_DSP"))
-        latency_accelerator = int(config.get("info","latency_accelerator"))
-        latency_predict = int(config.get("info","latency_predict"))
-        latency_check = int(config.get("info","latency_check"))
-        latency_commit = int(config.get("info","latency_commit"))
-        energy_sensing = int(config.get("info","energy_sensing"))
-        energy_ISP = int(config.get("info","energy_ISP"))
-        energy_CPU1 = int(config.get("info","energy_CPU1"))
-        energy_CPU2 = int(config.get("info","energy_CPU2"))
-        energy_CPU3 = int(config.get("info","energy_CPU3"))
-        energy_CPU4 = int(config.get("info","energy_CPU4"))
-        energy_CPU5 = int(config.get("info","energy_CPU5"))
-        energy_CPU6 = int(config.get("info","energy_CPU6"))
-        energy_CPU7 = int(config.get("info","energy_CPU7"))
-        energy_CPU8 = int(config.get("info","energy_CPU8"))
-        energy_GPU = int(config.get("info","energy_GPU"))
-        energy_DSP = int(config.get("info","energy_DSP"))
-        energy_accelerator = int(config.get("info","energy_accelerator"))
-        energy_predict = int(config.get("info","energy_predict"))
-        energy_check = int(config.get("info","energy_check"))
-        energy_commit = int(config.get("info","energy_commit"))
+        latency_sensing = float(config.get("info","latency_sensing"))
+        latency_ISP = float(config.get("info","latency_ISP"))
+        latency_CPU1 = float(config.get("info","latency_CPU1"))
+        latency_CPU2 = float(config.get("info","latency_CPU2"))
+        latency_CPU3 = float(config.get("info","latency_CPU3"))
+        latency_CPU4 = float(config.get("info","latency_CPU4"))
+        latency_CPU5 = float(config.get("info","latency_CPU5"))
+        latency_CPU6 = float(config.get("info","latency_CPU6"))
+        latency_CPU7 = float(config.get("info","latency_CPU7"))
+        latency_CPU8 = float(config.get("info","latency_CPU8"))
+        latency_GPU = float(config.get("info","latency_GPU"))
+        latency_DSP = float(config.get("info","latency_DSP"))
+        latency_accelerator = float(config.get("info","latency_accelerator"))
+        latency_predict = float(config.get("info","latency_predict"))
+        latency_check = float(config.get("info","latency_check"))
+        latency_commit = float(config.get("info","latency_commit"))
+        energy_sensing = float(config.get("info","energy_sensing"))
+        energy_ISP = float(config.get("info","energy_ISP"))
+        energy_CPU1 = float(config.get("info","energy_CPU1"))
+        energy_CPU2 = float(config.get("info","energy_CPU2"))
+        energy_CPU3 = float(config.get("info","energy_CPU3"))
+        energy_CPU4 = float(config.get("info","energy_CPU4"))
+        energy_CPU5 = float(config.get("info","energy_CPU5"))
+        energy_CPU6 = float(config.get("info","energy_CPU6"))
+        energy_CPU7 = float(config.get("info","energy_CPU7"))
+        energy_CPU8 = float(config.get("info","energy_CPU8"))
+        energy_GPU = float(config.get("info","energy_GPU"))
+        energy_DSP = float(config.get("info","energy_DSP"))
+        energy_accelerator = float(config.get("info","energy_accelerator"))
+        energy_predict = float(config.get("info","energy_predict"))
+        energy_check = float(config.get("info","energy_check"))
+        energy_commit = float(config.get("info","energy_commit"))
         accuracy = float(config.get("info","accuracy"))
         energy_budget = float(config.get("info","energy_budget"))
         latency_budget = float(config.get("info","latency_budget"))
@@ -764,8 +764,10 @@ def main():
                                 if (ISP_time[i] + latency_check > predict_time_p[i]):
                                     if (end_time_perf[i-1] > ISP_time[i] + latency_check):
                                         end_time_perf[i] = end_time_perf[i-1] + latency_accelerator + latency_commit
+                                        mis_energy = energy_accelerator
                                     else:
                                         end_time_perf[i] = ISP_time[i] + latency_accelerator +latency_check + latency_commit
+                                    mis_energy = energy_accelerator * (ISP_time[i]+latency_check-predict_time_p[i])/latency_accelerator
                                     ACC_signal = end_time_perf[i] - latency_commit
                                     DSP_signal = predict_time_p[i]
                                     GPU_signal = predict_time_p[i]
@@ -779,7 +781,7 @@ def main():
                                     DSP_signal = predict_time_p[i]
                                     GPU_signal = predict_time_p[i]
                                     CPU_signal = predict_time_p[i]
-                                total_energy_spec_perf = total_energy_spec_perf + energy_accelerator + energy_commit
+                                total_energy_spec_perf = total_energy_spec_perf + energy_accelerator + energy_commit+mis_energy
                             if (pk[t] == 'gpu'):
                                 if (ISP_time[i] + latency_check > predict_time_p[i]):
                                     end_time_perf[i] = ISP_time[i] + latency_GPU + latency_check + latency_commit
@@ -826,6 +828,7 @@ def main():
                             if (pk[t] == 'acc'):
                                 if (ISP_time[i] + latency_check > ACC_signal):
                                     end_time_perf[i] = ISP_time[i] + latency_accelerator + latency_check + latency_commit
+                                    mis_energy = energy_accelerator
                                     ACC_signal = end_time_perf[i] - latency_commit
                                     DSP_signal = DSP_signal
                                     GPU_signal = GPU_signal
@@ -836,7 +839,7 @@ def main():
                                     DSP_signal = DSP_signal
                                     GPU_signal = GPU_signal
                                     CPU_signal = CPU_signal
-                                total_energy_spec_perf = total_energy_spec_perf + energy_accelerator + energy_commit
+                                total_energy_spec_perf = total_energy_spec_perf + energy_accelerator + energy_commit + mis_energy
                             if (pk[t] == 'gpu'):
                                 if (ISP_time[i] +latency_check > GPU_signal):
                                     end_time_perf[i] = ISP_time[i] + latency_GPU + latency_check + latency_commit
@@ -1168,7 +1171,7 @@ def main():
                                 predict_time_p[j] = end_time_perf[i]
                                 predict_time_e[j] = end_time_energy[i]                    
                 else:
-                    if (i-predict_frame_location)==1 or (i-predict_frame_location)==2 or (i-predict_frame_location)==3:
+                    if (i-predict_frame_location)==1 or (i-predict_frame_location)==2 or (i-predict_frame_location)==3 or (i-predict_frame_location)==4:
                         total_energy_spec_energy = total_energy_spec_energy + energy_check
                         total_energy_spec_perf = total_energy_spec_perf + energy_check
                         if (ssim_real[i] <accuracy):
@@ -1926,13 +1929,13 @@ def main():
                 FCFS_dsp[i] = FCFS_dsp[i-1]
                 FCFS_cpu[i] = FCFS_cpu[i-1]
                 #print('gpu')
-            elif (FCFS_ISP_time[i] > FCFS_dsp[i-1]):
-                FCFS_end_time[i] = FCFS_ISP_time[i] + latency_DSP + latency_commit
-                total_energy_FCFS = total_energy_FCFS + energy_DSP + energy_commit
-                FCFS_dsp[i] = FCFS_end_time[i] - latency_commit
-                FCFS_acc[i] = FCFS_acc[i-1]
-                FCFS_gpu[i] = FCFS_gpu[i-1]
-                FCFS_cpu[i] = FCFS_cpu[i-1]
+            #elif (FCFS_ISP_time[i] > FCFS_dsp[i-1]):
+            #    FCFS_end_time[i] = FCFS_ISP_time[i] + latency_DSP + latency_commit
+            #    total_energy_FCFS = total_energy_FCFS + energy_DSP + energy_commit
+            #    FCFS_dsp[i] = FCFS_end_time[i] - latency_commit
+            #    FCFS_acc[i] = FCFS_acc[i-1]
+            #    FCFS_gpu[i] = FCFS_gpu[i-1]
+            #    FCFS_cpu[i] = FCFS_cpu[i-1]
                 #print('dsp')
             elif (FCFS_ISP_time[i] > FCFS_cpu[i-1]):
                 FCFS_end_time[i] = FCFS_ISP_time[i] + latency_CPU1 + latency_commit

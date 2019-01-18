@@ -1012,4 +1012,10 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    #main()
+    s = 0
+    a = np.load("ssim.npy")
+    for i in range(len(a)):
+        if a[i]>0.7:
+            s = s + 1
+    print(s)

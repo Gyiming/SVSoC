@@ -6,7 +6,7 @@
 
 //this program is wrong, it is just for calculate the time complexity.
 
-int check(int i,Ebudget,Ea,Eb,Ec,Ed)
+int check(int i,int Ebudget,int Ea,int Eb,int Ec,int Ed)
 {
 	int a,b,c,d;
 	if (((Ebudget-Ea)/Ea)<(10-i) && ((Ebudget-Ea)/Eb)<(10-i) && ((Ebudget-Ea)/Ec)<(10-i) && ((Ebudget-Ea)/Ed)<(10-i))
@@ -21,7 +21,7 @@ int check(int i,Ebudget,Ea,Eb,Ec,Ed)
 
 }
 
-int schedule(int i,La,Lb,Lc,Ld,Ea,Eb,Ec,Ed,Ebudget)
+int schedule(int i,int La,int Lb,int Lc,int Ld,int Ea,int Eb,int Ec,int Ed,int Ebudget)
 {
 	int ast,bst,cst,dst;
 	int check_result;
@@ -44,7 +44,7 @@ int schedule(int i,La,Lb,Lc,Ld,Ea,Eb,Ec,Ed,Ebudget)
 
 }
 
-int las(int Ebudget,Ea,Eb,Ec,Ed,La,Lb,Lc,Ld)
+int las(int Ebudget,int Ea,int Eb,int Ec,int Ed,int La,int Lb,int Lc,int Ld)
 {
 	int a[11],b[11],c[11],d[11];
 	int ft[11];
@@ -134,17 +134,13 @@ int main()
 {
 	double runtime;
 	
-	LARGE_INTEGER time_start;	//开始时间
-	LARGE_INTEGER time_over;	//结束时间
-	double dqFreq;		//计时器频率
-	LARGE_INTEGER f;	//计时器频率
-	QueryPerformanceFrequency(&f);
-	dqFreq=(double)f.QuadPart;
-	QueryPerformanceCounter(&time_start);	//计时开始
+	struct timespec start,finish;
+	clock_gettime(CLOCK_MONOTONIC, &start);	
 	las(1000,100,100,100,100,100,100,100,100);
-	QueryPerformanceCounter(&time_over);	//计时结束
-	runtime=1000000*(time_over.QuadPart-time_start.QuadPart)/dqFreq;
-	//printf("\nrun_time：%fus\n",run_time);
+	clock_gettime(CLOCK_MONOTONIC, &finish);
+	runtime = (finish.tv_sec - start.tv_sec);
+	runtime += (finish.tv_nsec - start.tv_nsec)/100000000.0;
+	printf("\nrun_time：%f\n",runtime);
 
 
 	return 0;

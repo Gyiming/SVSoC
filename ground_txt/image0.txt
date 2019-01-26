@@ -1,0 +1,4 @@
+bicycle 717 187 747 205
+trafficlight 741 126 761 158
+person 756 174 774 214
+car 576 180 629 231

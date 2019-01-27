@@ -16,7 +16,8 @@ def SIFT_match(img1,img2):
 
 	#print(des1.shape)
 	#print(des2.shape)
-
+	if not kp2:
+	    return (len(kp1),0)
 	bf = cv2.BFMatcher(cv2.NORM_L1, crossCheck=True)
 	matches = bf.match(des1,des2)
 	#print(len(matches))
@@ -58,9 +59,12 @@ def check(img_key,img_spec,bbox_key,bbox_spec):
 				key_info = line_key.split()
 				if cal_IOU(spec_info[2],spec_info[4],spec_info[3],spec_info[5],key_info[2],key_info[4],key_info[3],key_info[5]) > 0.5:
 					key_points, matches = SIFT_match(img_key[int(key_info[3]):int(key_info[5]),int(key_info[2]):int(key_info[4])],img_spec[int(spec_info[3]):int(spec_info[5]),int(spec_info[2]):int(spec_info[4])])
-					if (matches/key_points) > 0.5:
+					if key_points == 0:
+						match_bbox += 1				
+					elif (float(matches)/float(key_points)) > 0.5:
 						match_bbox += 1
-	if (match_bbox>len(bbox_spec)/2):
+	#print(match_bbox,len(bbox_spec)/2)
+	if (match_bbox>float(len(bbox_spec)/2)):
 		return 1
 	else:
 		return 0
@@ -83,7 +87,7 @@ def main():
 			fp_bbox_key = open(bbox_dir_key,'r')
 			bbox_key = fp_bbox_key.readlines()
 			fp_bbox_spec = open(bbox_dir_spec,'r')
-			bbox_spec = fp_bbox_spec.readlines()
+			bbox_spec = fp_bbox_spec.readlines()		
 			if check(img_key,img_spec,bbox_key,bbox_spec) == 1:
 				cmd = 'cp ./convert_tiny/' + 'image' + str(i) + '.txt' + ' ./check/'
 				os.system(cmd)

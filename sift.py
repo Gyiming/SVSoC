@@ -33,8 +33,8 @@ def cal_IOU(cx1,cx2,cy1,cy2,gx1,gx2,gy1,gy2):
     gx2 = int(gx2)
     gy1 = int(gy1)
     gy2 = int(gy2)
-    carea = (cx2 - cx1) * (cy2 - cy1)
-    garea = (gx2 - gx1) * (gy2 - gy1) 
+    carea = float((cx2 - cx1) * (cy2 - cy1))
+    garea = float((gx2 - gx1) * (gy2 - gy1)) 
  
     x1 = max(cx1, gx1)
     y1 = max(cy1, gy1)
@@ -42,11 +42,17 @@ def cal_IOU(cx1,cx2,cy1,cy2,gx1,gx2,gy1,gy2):
     y2 = min(cy2, gy2)
     w = max(0, x2 - x1)
     h = max(0, y2 - y1)
-    area = w * h 
+    area = float(w * h) 
  
-    iou = area / (carea + garea - area)
+    iou = float(area / (carea + garea - area))
  
     return iou
+
+def positive_check(a):
+    output = int(a)
+    if output<0:
+        output = 0
+    return output
 
 def check(img_key,img_spec,bbox_key,bbox_spec):
 	match_bbox = 0
@@ -69,10 +75,11 @@ def check(img_key,img_spec,bbox_key,bbox_spec):
 			for line_key in bbox_key:
 				count = count + 1
 				if count == matching_url:
-					key_points, matches = SIFT_match(img_key[int(key_info[3]):int(key_info[5]),int(key_info[2]):int(key_info[4])],img_spec[int(spec_info[3]):int(spec_info[5]),int(spec_info[2]):int(spec_info[4])])
+					
+					key_points, matches = SIFT_match(img_key[positive_check(key_info[3]):positive_check(key_info[5]),positive_check(key_info[2]):positive_check(key_info[4])],img_spec[positive_check(spec_info[3]):positive_check(spec_info[5]),positive_check(spec_info[2]):positive_check(spec_info[4])])
 					if key_points == 0:
 						match_bbox += 1				
-					elif (float(matches)/float(key_points)) > 0.5:
+					elif (float(matches)/float(key_points)) > 0.7:
 						match_bbox += 1
 	#print(match_bbox,len(bbox_spec)/2)
 	if (match_bbox>float(len(bbox_spec)/2)):

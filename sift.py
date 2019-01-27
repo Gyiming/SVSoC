@@ -23,7 +23,16 @@ def SIFT_match(img1,img2):
 	return(len(kp1),len(matches))
 
 def cal_IOU(cx1,cx2,cy1,cy2,gx1,gx2,gy1,gy2):
-	carea = (cx2 - cx1) * (cy2 - cy1)
+
+    cx1 = int(cx1)
+    cx2 = int(cx2)
+    cy1 = int(cy1)
+    cy2 = int(cy2)
+    gx1 = int(gx1)
+    gx2 = int(gx2)
+    gy1 = int(gy1)
+    gy2 = int(gy2)
+    carea = (cx2 - cx1) * (cy2 - cy1)
     garea = (gx2 - gx1) * (gy2 - gy1) 
  
     x1 = max(cx1, gx1)
@@ -65,12 +74,12 @@ def main():
 			cmd = 'cp ./convert_yolo/' + 'image' + str(i) + '.txt' + ' ./check/'
 			os.system(cmd)
 		else:
-			bbox_dir_key = './convert_yolo' + 'image' + str(key_frame) + '.txt'
-			bbox_dir_spec = './convert_yolo' + 'image' + str(i) + '.txt'
-			img_dir_key = './data_kitti' + 'image' + str(key_frame) + '.png'
-			img_dir_key = './data_kitti' + 'image' + str(i) + '.png'
+			bbox_dir_key = './convert_yolo/' + 'image' + str(key_frame) + '.txt'
+			bbox_dir_spec = './convert_yolo/' + 'image' + str(i) + '.txt'
+			img_dir_key = './data_kitti/' + 'image' + str(key_frame) + '.png'
+			img_dir_spec = './data_kitti/' + 'image' + str(i) + '.png'
 			img_key = cv2.imread(img_dir_key)
-			img_spec = cv2.imread(img_spec_key)
+			img_spec = cv2.imread(img_dir_spec)
 			fp_bbox_key = open(bbox_dir_key,'r')
 			bbox_key = fp_bbox_key.readlines()
 			fp_bbox_spec = open(bbox_dir_spec,'r')
@@ -83,6 +92,7 @@ def main():
 				cmd = 'cp ./convert_yolo/' + 'image' + str(i) + '.txt' + ' ./check/'
 				os.system(cmd)
 				key_frame = i
+        print(match_number)
 
 
 if __name__ == '__main__':

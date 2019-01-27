@@ -55,9 +55,20 @@ def check(img_key,img_spec,bbox_key,bbox_spec):
 	else:
 		for line_spec in bbox_spec:
 			spec_info = line_spec.split()
+			max_iou = 0
+			count = 0
+			matching_url = 0
+			#finding the bounding box in key frame that has the most IOU, matching_url
 			for line_key in bbox_key:
+				count = count + 1
 				key_info = line_key.split()
-				if cal_IOU(spec_info[2],spec_info[4],spec_info[3],spec_info[5],key_info[2],key_info[4],key_info[3],key_info[5]) > 0.5:
+				if cal_IOU(spec_info[2],spec_info[4],spec_info[3],spec_info[5],key_info[2],key_info[4],key_info[3],key_info[5]) > max_iou:
+					matching_url = count
+			count = 0
+			#calculating the matching points with matching_url
+			for line_key in bbox_key:
+				count = count + 1
+				if count == matching_url:
 					key_points, matches = SIFT_match(img_key[int(key_info[3]):int(key_info[5]),int(key_info[2]):int(key_info[4])],img_spec[int(spec_info[3]):int(spec_info[5]),int(spec_info[2]):int(spec_info[4])])
 					if key_points == 0:
 						match_bbox += 1				

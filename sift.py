@@ -57,7 +57,7 @@ def check(img_key,img_spec,bbox_key,bbox_spec):
 			for line_key in bbox_key:
 				key_info = line_key.split()
 				if cal_IOU(spec_info[2],spec_info[4],spec_info[3],spec_info[5],key_info[2],key_info[4],key_info[3],key_info[5]) > 0.5:
-					key_points, matches = SIFT_match(img_key[key_info[3]:key_info[5],key_info[2]:key_info[4]],img_spec[spec_info[3]:spec_info[5],spec_info[2]:spec_info[4]])
+					key_points, matches = SIFT_match(img_key[int(key_info[3]):int(key_info[5]),int(key_info[2]):int(key_info[4])],img_spec[int(spec_info[3]):int(spec_info[5]),int(spec_info[2]):int(spec_info[4])])
 					if (matches/key_points) > 0.5:
 						match_bbox += 1
 	if (match_bbox>len(bbox_spec)/2):

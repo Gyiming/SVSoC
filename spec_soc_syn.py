@@ -781,7 +781,8 @@ def main():
                                     DSP_signal = predict_time_p[i]
                                     GPU_signal = predict_time_p[i]
                                     CPU_signal = predict_time_p[i]
-                                total_energy_spec_perf = total_energy_spec_perf + energy_accelerator + energy_commit+mis_energy
+                                #total_energy_spec_perf = total_energy_spec_perf + energy_accelerator + energy_commit+mis_energy
+                                total_energy_spec_perf = total_energy_spec_perf + energy_accelerator + energy_commit
                             if (pk[t] == 'gpu'):
                                 if (ISP_time[i] + latency_check > predict_time_p[i]):
                                     end_time_perf[i] = ISP_time[i] + latency_GPU + latency_check + latency_commit
@@ -839,7 +840,8 @@ def main():
                                     DSP_signal = DSP_signal
                                     GPU_signal = GPU_signal
                                     CPU_signal = CPU_signal
-                                total_energy_spec_perf = total_energy_spec_perf + energy_accelerator + energy_commit + mis_energy
+                                #total_energy_spec_perf = total_energy_spec_perf + energy_accelerator + energy_commit + mis_energy
+                                total_energy_spec_perf = total_energy_spec_perf + energy_accelerator + energy_commit
                             if (pk[t] == 'gpu'):
                                 if (ISP_time[i] +latency_check > GPU_signal):
                                     end_time_perf[i] = ISP_time[i] + latency_GPU + latency_check + latency_commit
@@ -1171,7 +1173,9 @@ def main():
                                 predict_time_p[j] = end_time_perf[i]
                                 predict_time_e[j] = end_time_energy[i]                    
                 else:
-                    if (i-predict_frame_location)==1 or (i-predict_frame_location)==2 or (i-predict_frame_location)==3 or (i-predict_frame_location)==4:
+                    if (i-predict_frame_location)==1 or (i-predict_frame_location)==2 or (i-predict_frame_location)==3 or (i-predict_frame_location)==4 or (i-predict_frame_location) == 5:
+                    #if (i-predict_frame_location)==1 or (i-predict_frame_location)==2 or (i-predict_frame_location)==3 or (i-predict_frame_location)==4 or (i-predict_frame_location) == 5 or (i-predict_frame_location) ==6 or (i-predict_frame_location) ==7 or (i-predict_frame_location) ==8:
+                    #if (i-predict_frame_location)==1 or (i-predict_frame_location)==2 or (i-predict_frame_location)==3:
                         total_energy_spec_energy = total_energy_spec_energy + energy_check
                         total_energy_spec_perf = total_energy_spec_perf + energy_check
                         if (ssim_real[i] <accuracy):
@@ -1920,7 +1924,7 @@ def main():
                 FCFS_gpu[i] = FCFS_gpu[i-1]
                 FCFS_dsp[i] = FCFS_dsp[i-1]
                 FCFS_cpu[i] = FCFS_cpu[i-1]
-                #print('acc')
+                print('acc')
             elif (FCFS_ISP_time[i] > FCFS_gpu[i-1]):
                 FCFS_end_time[i] = FCFS_ISP_time[i] + latency_GPU + latency_commit
                 total_energy_FCFS = total_energy_FCFS + energy_GPU + energy_commit
@@ -1928,14 +1932,14 @@ def main():
                 FCFS_acc[i] = FCFS_acc[i-1]
                 FCFS_dsp[i] = FCFS_dsp[i-1]
                 FCFS_cpu[i] = FCFS_cpu[i-1]
-                #print('gpu')
+                print('gpu')
             #elif (FCFS_ISP_time[i] > FCFS_dsp[i-1]):
-            #    FCFS_end_time[i] = FCFS_ISP_time[i] + latency_DSP + latency_commit
-            #    total_energy_FCFS = total_energy_FCFS + energy_DSP + energy_commit
-            #    FCFS_dsp[i] = FCFS_end_time[i] - latency_commit
-            #    FCFS_acc[i] = FCFS_acc[i-1]
-            #    FCFS_gpu[i] = FCFS_gpu[i-1]
-            #    FCFS_cpu[i] = FCFS_cpu[i-1]
+                #FCFS_end_time[i] = FCFS_ISP_time[i] + latency_DSP + latency_commit
+                #total_energy_FCFS = total_energy_FCFS + energy_DSP + energy_commit
+                #FCFS_dsp[i] = FCFS_end_time[i] - latency_commit
+                #FCFS_acc[i] = FCFS_acc[i-1]
+                #FCFS_gpu[i] = FCFS_gpu[i-1]
+                #FCFS_cpu[i] = FCFS_cpu[i-1]
                 #print('dsp')
             elif (FCFS_ISP_time[i] > FCFS_cpu[i-1]):
                 FCFS_end_time[i] = FCFS_ISP_time[i] + latency_CPU1 + latency_commit
@@ -1952,7 +1956,7 @@ def main():
                 FCFS_gpu[i] = FCFS_gpu[i-1]
                 FCFS_dsp[i] = FCFS_dsp[i-1]
                 FCFS_cpu[i] = FCFS_cpu[i-1]
-                #print('acc')               
+                print('acc')               
 
             accumulation_FCFS = accumulation_FCFS+FCFS_end_time[i] - start_time[i]
 
@@ -2073,7 +2077,7 @@ def main():
     print('GPU_energy', total_energy_GPU / frame)
     print('DSP_energy', total_energy_DSP / frame)
     print('accelerator_energy', total_energy_accelerator / frame)
-    print('perfbest_energy', total_energy_spec_perf / frame)
+    print('perfbest_energy', total_energy_spec_perf / frame )
     print('energybest_energy', total_energy_spec_energy / frame)
     print('FCFS',accumulation_FCFS/frame)
     print('FCFS_energy', total_energy_FCFS/frame)

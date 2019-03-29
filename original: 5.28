@@ -1,0 +1,33 @@
+original: 5.28
+th 0.8: 5.26 38/828
+th 0.75 5.24 243/828
+th 0.7  5.06 479/828
+th 0.65 5.04 617/828
+th 0.6  5.0 664/828
+th 0.55 4.97 687/828
+th 0.5  4.87 712/828
+
+
+
+
+
+
+backend yolobase: 30
+backend tinyyolo: 13.21
+backend 1/2bbox 0.1keypoints 461 frames pass check: 24.99
+backend 1/2bbox 0.3keypoints 445 frames pass check: 25.25
+backend 1/2bbox 0.5keypoints 406 frames pass check: 25.89
+backend 1/2bbox 0.7keypoints 264 frames pass check: 30
+backend brutal check, every 3 frames a key_frame, 554 pass check: 19.28
+backend brutal check, every 4 frames a key_frame, 624 pass check: 17.71
+
+app10: 
+app9 : 
+app8 : 
+app7 : 
+app6 : 5.33
+app5 : 5.15
+app4 : 4.99
+
+
+

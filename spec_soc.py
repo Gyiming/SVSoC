@@ -974,6 +974,10 @@ def main():
             hold_end_time[i] = end_time_perf[i] + 470
 
         accumulation_hold = accumulation_hold + hold_end_time[i] - start_time[i]
+
+
+
+            
          
 
 

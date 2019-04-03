@@ -377,7 +377,7 @@ def main():
 
                 if (predict_time[i] > predict_time_e[i]):
                     predict_time_e[i] = predict_time[i]
-                pk,tk= schedule.laschdule(energy_budget,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1)
+                pk,tk= schedule.laschdule(energy_budget,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1,ACC_signal,GPU_signal,DSP_signal,CPU_signal)
                 t = i - predict_frame_location
                 if (t==1):
                     if (pk[t] == 'acc'):
@@ -757,7 +757,7 @@ def main():
 
                         if (predict_time[i] > predict_time_e[i]):
                             predict_time_e[i] = predict_time[i]
-                        pk,tk= schedule.laschdule(energy_budget,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1)
+                        pk,tk= schedule.laschdule(energy_budget,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1,ACC_signal,GPU_signal,DSP_signal,CPU_signal)
                         t = i - predict_frame_location
                         if (t==1):
                             if (pk[t] == 'acc'):
@@ -1036,7 +1036,7 @@ def main():
 
                         if (predict_time[i] > predict_time_e[i]):
                             predict_time_e[i] = predict_time[i]
-                        pk,tk= schedule.laschdule(energy_budget,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1)
+                        pk,tk= schedule.laschdule(energy_budget,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1,ACC_signal,GPU_signal,DSP_signal,CPU_signal)
                         t = i - predict_frame_location
                         if (t==1):
                             if (pk[t] == 'acc'):
@@ -1262,7 +1262,7 @@ def main():
 
                             if (predict_time[i] > predict_time_e[i]):
                                 predict_time_e[i] = predict_time[i]
-                            pk,tk= schedule.laschdule(energy_budget,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1)
+                            pk,tk= schedule.laschdule(energy_budget,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1,ACC_signal,GPU_signal,DSP_signal,CPU_signal)
                             t = i - predict_frame_location
                             if (t==1):
                                 if (pk[t] == 'acc'):
@@ -1536,7 +1536,7 @@ def main():
 
                             if (predict_time[i] > predict_time_e[i]):
                                 predict_time_e[i] = predict_time[i]
-                            pk,tk= schedule.laschdule(energy_budget,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1)
+                            pk,tk= schedule.laschdule(energy_budget,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1,ACC_signal,GPU_signal,DSP_signal,CPU_signal)
                             t = i - predict_frame_location
                             if (t==1):
                                 if (pk[t] == 'acc'):
@@ -1755,7 +1755,7 @@ def main():
 
                         if (predict_time[i] > predict_time_e[i]):
                             predict_time_e[i] = predict_time[i]
-                        pk,tk= schedule.laschdule(energy_budget,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1)
+                        pk,tk= schedule.laschdule(energy_budget,energy_accelerator,energy_GPU,energy_DSP,energy_CPU1,latency_accelerator,latency_GPU,latency_DSP,latency_CPU1,ACC_signal,GPU_signal,DSP_signal,CPU_signal)
                         t = i - predict_frame_location
                         if (t==1):
                             if (pk[t] == 'acc'):
@@ -1933,14 +1933,14 @@ def main():
                 FCFS_dsp[i] = FCFS_dsp[i-1]
                 FCFS_cpu[i] = FCFS_cpu[i-1]
                 print('gpu')
-            #elif (FCFS_ISP_time[i] > FCFS_dsp[i-1]):
-                #FCFS_end_time[i] = FCFS_ISP_time[i] + latency_DSP + latency_commit
-                #total_energy_FCFS = total_energy_FCFS + energy_DSP + energy_commit
-                #FCFS_dsp[i] = FCFS_end_time[i] - latency_commit
-                #FCFS_acc[i] = FCFS_acc[i-1]
-                #FCFS_gpu[i] = FCFS_gpu[i-1]
-                #FCFS_cpu[i] = FCFS_cpu[i-1]
-                #print('dsp')
+            elif (FCFS_ISP_time[i] > FCFS_dsp[i-1]):
+                FCFS_end_time[i] = FCFS_ISP_time[i] + latency_DSP + latency_commit
+                total_energy_FCFS = total_energy_FCFS + energy_DSP + energy_commit
+                FCFS_dsp[i] = FCFS_end_time[i] - latency_commit
+                FCFS_acc[i] = FCFS_acc[i-1]
+                FCFS_gpu[i] = FCFS_gpu[i-1]
+                FCFS_cpu[i] = FCFS_cpu[i-1]
+                print('dsp')
             elif (FCFS_ISP_time[i] > FCFS_cpu[i-1]):
                 FCFS_end_time[i] = FCFS_ISP_time[i] + latency_CPU1 + latency_commit
                 total_energy_FCFS = total_energy_FCFS + energy_CPU1 + energy_commit

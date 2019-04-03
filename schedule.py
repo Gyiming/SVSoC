@@ -16,6 +16,7 @@ def check(i,Ebudget,Ea,Eb,Ec,Ed,aenable,benable,cenable,denable):
 		cenable = 0
 	if (((Ebudget-Ed)/Ea)<(10-i) and ((Ebudget-Ed)/Ea)<(10-i) and ((Ebudget-Ed)/Ec)<(10-i) and ((Ebudget-Ed)/Ed)<(10-i)):
 		denable = 0
+	#print (benable)
 	return aenable,benable,cenable,denable
 
 	
@@ -25,15 +26,15 @@ def schecule(i,aenable,benable,cenable,denable,La,Lb,Lc,Ld,Ea,Eb,Ec,Ed,Ebudget,a
 	aenable,benable,cenable,denable=check(i,Ebudget,Ea,Eb,Ec,Ed,aenable,benable,cenable,denable)
 
 	if (aenable==0):
-		ast=10000
+		ast=100000000000
 	if (benable==0):
-		bst=10000
+		bst=100000000000
 	if (cenable==0):
-		cst=10000
+		cst=100000000000
 	if (denable==0):
-		dst=10000
+		dst=100000000000
 
-	small = 1000000
+	small = 1000000000000
 
 	result = [La+ast,Lb+bst,Lc+cst,Ld+dst]
 
@@ -45,7 +46,7 @@ def schecule(i,aenable,benable,cenable,denable,La,Lb,Lc,Ld,Ea,Eb,Ec,Ed,Ebudget,a
 	return value
 
 
-def laschdule(Ebudget,Ea,Eb,Ec,Ed,La,Lb,Lc,Ld):
+def laschdule(Ebudget,Ea,Eb,Ec,Ed,La,Lb,Lc,Ld,Aa,Ab,Ac,Ad):
 	'''
 	Ebudget = 400
 	Ea = 10
@@ -57,10 +58,10 @@ def laschdule(Ebudget,Ea,Eb,Ec,Ed,La,Lb,Lc,Ld):
 	Lc = 231
 	Ld = 565
 	'''
-	a=[0 for i in range(11)]
-	b=[0 for i in range(11)]
-	c=[0 for i in range(11)]
-	d=[0 for i in range(11)]
+	a=[Aa for i in range(11)]
+	b=[Ab for i in range(11)]
+	c=[Ac for i in range(11)]
+	d=[Ad for i in range(11)]
 	ft = [0 for i in range(11)]
 	pk = [0 for i in range(11)]
 	aenable = [0 for i in range(11)]
@@ -130,6 +131,7 @@ def laschdule(Ebudget,Ea,Eb,Ec,Ed,La,Lb,Lc,Ld):
 	#for i in range(1,11):
 	#	print(ft[i])
 
+	#print (pk)
 	return pk,ft
 
 if __name__ == '__main__':

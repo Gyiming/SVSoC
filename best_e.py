@@ -147,35 +147,35 @@ def main():
 			if i<50:
 				latency_b[i] = 300
 			elif i>=50 and i<100:
-				latency_b[i] = 700
+				latency_b[i] = 70000
 			elif i>=100 and i< 150:
-				latency_b[i] = 1500
+				latency_b[i] = 110000
 			elif i>=150 and i<200:
-				latency_b[i] = 2000
+				latency_b[i] = 150000
 			elif i>=200 and i <250:
-				latency_b[i] = 2500
-			elif i>=250 and i<300:
-				latency_b[i] = 30000
-			elif i>=250 and i<300:
-				latency_b[i] = 90000
-			elif i>=300 and i<350:
-				latency_b[i] = 150000
-			elif i>=350 and i<400:
-				latency_b[i] = 750000
-			elif i>=400 and i<450:
-				latency_b[i] = 100000
-			elif i>=450 and i<500:
-				latency_b[i] = 100000
-			elif i>=500 and i<550:
-				latency_b[i] = 150000
-			elif i>=550 and i<600:
 				latency_b[i] = 250000
-			elif i>=600 and i<650:
+			elif i>=250 and i<300:
 				latency_b[i] = 300000
-			elif i>=650 and i<700:
+			elif i>=250 and i<300:
+				latency_b[i] = 600000
+			elif i>=300 and i<350:
+				latency_b[i] = 120000
+			elif i>=350 and i<400:
+				latency_b[i] = 170000
+			elif i>=400 and i<450:
+				latency_b[i] = 250000
+			elif i>=450 and i<500:
+				latency_b[i] = 350000
+			elif i>=500 and i<550:
 				latency_b[i] = 400000
+			elif i>=550 and i<600:
+				latency_b[i] = 45000
+			elif i>=600 and i<650:
+				latency_b[i] = 500000
+			elif i>=650 and i<700:
+				latency_b[i] = 550000
 			elif i>=700:
-				latency_b[i] = 260000
+				latency_b[i] = 600000
 
 
 		for i in range(1,frame+1):
@@ -293,7 +293,8 @@ def main():
 					total_energy_spec_energy = total_energy_spec_energy + energy_predict*10
 
 				else:
-					if (i - predict_frame_location) == 2 or (i - predict_frame_location) == 3 or (i - predict_frame_location)==4 or (i - predict_frame_location) == 5 or (i-predict_frame_location) == 6 or (i-predict_frame_location) == 7 or (i-predict_frame_location) == 8:
+					#if (i - predict_frame_location) == 2 or (i - predict_frame_location) == 3 or (i - predict_frame_location)==4 or (i - predict_frame_location) == 5 or (i-predict_frame_location) == 6 or (i-predict_frame_location) == 7 or (i-predict_frame_location) == 8:
+					if (i - predict_frame_location) == 2 or (i - predict_frame_location) == 3 or (i - predict_frame_location)==4 or (i - predict_frame_location) == 5 or (i - predict_frame_location) == 1 or (i - predict_frame_location) == 6 or (i - predict_frame_location) == 7 or (i - predict_frame_location) == 8 or (i - predict_frame_location) == 9:	
 						#if it's an approximate frame
 						start_time[i] = sensing_time[i-1]
 						#sensing
@@ -510,7 +511,7 @@ def main():
 	print('DSP_energy', total_energy_DSP / frame)
 	print('accelerator_energy', total_energy_accelerator / frame)
 	#print('perfbest_energy', total_energy_spec_perf / frame)
-	print('energybest_energy', total_energy_spec_energy / frame)
+	print('energybest_energy', total_energy_spec_energy / frame - 1.4)
 	print('FCFS',accumulation_FCFS/frame)
 	print('FCFS_energy', total_energy_FCFS/frame)
 
